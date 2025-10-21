@@ -4,7 +4,7 @@ import sendResponse from "../../../utils/sendResponse";
 import { PaymentServicesSSL } from "./payment.services";
 
 const initPayment = catchAsync(async (req, res, next) => {
-  const result = await PaymentServicesSSL.initPayment(req.params.orderId);
+  const result = await PaymentServicesSSL.initPayment(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -48,8 +48,22 @@ const handleIPN = catchAsync(async (req, res) => {
   });
 });
 
+
+const handleSuccess = catchAsync(async (req: Request, res: Response) => {
+  const { tran_id} = req.params;
+
+  if (!tran_id) {
+    res.status(400).json({ message: "tran_id or val_id missing" });
+    return;
+  }
+
+   res.redirect(`https://independent-mart.vercel.app/success-payment/${tran_id}`);
+});
+
+
 export const PaymentControllerSSL = {
   initPayment,
   validatePayment,
   handleIPN,
+  handleSuccess,
 };

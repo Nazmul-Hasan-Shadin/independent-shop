@@ -42,7 +42,7 @@ const getAllProduct = (filters, options) => __awaiter(void 0, void 0, void 0, fu
             },
         });
     }
-    console.log(searchTerm, 'searchterm');
+    console.log(searchTerm, "searchterm");
     const andCondition = [];
     if (searchTerm) {
         andCondition.push({
@@ -108,9 +108,9 @@ const getAllProduct = (filters, options) => __awaiter(void 0, void 0, void 0, fu
             category: true,
             shop: {
                 select: {
-                    name: true
-                }
-            }
+                    name: true,
+                },
+            },
         },
         skip: (page - 1) * limit,
         orderBy: options.sortBy && options.orderBy
@@ -146,17 +146,36 @@ const getSingleProduct = (productId) => __awaiter(void 0, void 0, void 0, functi
     return result;
 });
 const getProductByShopId = (shopId, filterQuery) => __awaiter(void 0, void 0, void 0, function* () {
+    const { searchTerm } = filterQuery;
+    const andCondition = [];
+    if (searchTerm) {
+        andCondition.push({
+            OR: ["name", "description"].map((field) => {
+                return {
+                    [field]: {
+                        contains: searchTerm,
+                        mode: "insensitive"
+                    },
+                };
+            }),
+        });
+    }
+    andCondition.push({
+        shopId: shopId,
+    });
+    const filterdwhereCondition = andCondition.length
+        ? { AND: andCondition }
+        : {};
     const limit = Number(filterQuery.limit) || 16;
     const page = Number(filterQuery.page) || 1;
+    console.log(limit, page);
     const result = yield prisma_1.default.product.findMany({
-        where: { shopId: shopId },
-        skip: (page - 1) / limit,
+        where: filterdwhereCondition,
+        skip: (page - 1) * limit,
         take: limit,
     });
     const total = yield prisma_1.default.product.count({
-        where: {
-            shopId,
-        },
+        where: filterdwhereCondition,
     });
     return {
         meta: {

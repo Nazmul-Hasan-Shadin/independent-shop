@@ -38,7 +38,7 @@ const getAllShop = async (
     console.log(filterQuery,'filterquery');
     
     
-  const andCondition: Prisma.ShopWhereInput[] = [];
+  const andCondition = [];
 
   if (searchTerm) {
     andCondition.push({
@@ -77,6 +77,7 @@ const getAllShop = async (
   const filteredWhereCondition =
     andCondition.length > 0 ? { AND: andCondition } : {};
      console.log(filterQuery?.limit,'k');
+
      
   let limit = Number(filterQuery.limit) || 12;
   let page = Number(filterQuery.page) || 1;

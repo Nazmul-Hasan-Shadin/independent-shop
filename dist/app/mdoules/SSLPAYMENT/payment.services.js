@@ -16,18 +16,18 @@ exports.PaymentServicesSSL = void 0;
 const axios_1 = __importDefault(require("axios"));
 const config_1 = __importDefault(require("../../../config"));
 const AppError_1 = __importDefault(require("../../error/AppError"));
-const initPayment = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
+const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const data = {
-        total_amount: 100,
+        total_amount: Number(orderInfo.price),
         currency: "BDT",
-        tran_id: "REF123", // use unique tran_id for each api call
-        success_url: "http://localhost:3000/success-payment",
+        tran_id: orderInfo.transactionId, // use unique tran_id for each api call
+        success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+        // success_url: "http://localhost:3000/success-payment",
         fail_url: "http://localhost:3030/fail",
         cancel_url: "http://localhost:3030/cancel",
-        ipn_url: "http://localhost:3030/ipn",
+        ipn_url: "https://independent-shop.vercel.app/payment-gate/ipn",
         shipping_method: "Courier",
         product_name: "Computer.",
-        product_category: "Electronic",
         product_profile: "general",
         cus_name: "Customer Name",
         cus_email: "customer@example.com",
@@ -57,7 +57,7 @@ const initPayment = (orderId) => __awaiter(void 0, void 0, void 0, function* () 
     };
 });
 const validatePayment = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('iam called', payload);
+    console.log("iam called", payload);
     try {
         const response = yield (0, axios_1.default)({
             method: "GET",
@@ -72,9 +72,8 @@ const validatePayment = (payload) => __awaiter(void 0, void 0, void 0, function*
 const validatePayment2 = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { val_id } = payload;
-        // SSLCommerz Validation API (sandbox/prod অনুযায়ী base URL সেট করিস)
+        payload;
         const response = yield axios_1.default.get(`https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?val_id=${val_id}&store_id=${config_1.default.payment.store_id}&store_passwd=${config_1.default.payment.store_pass}&v=1&format=json`);
-        // এখানে চাইলে DB update করতে পারিস (order status = "paid") ইত্যাদি
         return response.data;
     }
     catch (error) {
@@ -84,5 +83,5 @@ const validatePayment2 = (payload) => __awaiter(void 0, void 0, void 0, function
 exports.PaymentServicesSSL = {
     initPayment,
     validatePayment,
-    validatePayment2
+    validatePayment2,
 };

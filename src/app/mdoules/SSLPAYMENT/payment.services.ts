@@ -2,18 +2,21 @@ import axios from "axios";
 import config from "../../../config";
 import AppError from "../../error/AppError";
 
-const initPayment = async (orderId: string) => {
+const initPayment = async (orderInfo: any) => {
   const data = {
-    total_amount: 100,
+    total_amount: Number(orderInfo.price),
     currency: "BDT",
-    tran_id: "REF1233", // use unique tran_id for each api call
-    success_url: "https://independent-mart.vercel.app/success-payment",
+    tran_id: orderInfo.transactionId, // use unique tran_id for each api call
+    success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+    // success_url: `https://44b35636cdbc.ngrok-free.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
-    ipn_url: "https://independent-shop.vercel.app/api/v1/payment/ipn",
+    ipn_url: "https://independent-shop.vercel.app/payment-gate/ipn",
+
     shipping_method: "Courier",
     product_name: "Computer.",
-    product_category: "Electronic",
+
     product_profile: "general",
     cus_name: "Customer Name",
     cus_email: "customer@example.com",
@@ -45,15 +48,14 @@ const initPayment = async (orderId: string) => {
     }
   );
 
-
   return {
     paymentUrl: response.data.GatewayPageURL,
   };
 };
 
 const validatePayment = async (payload: any) => {
-    console.log('iam called',payload);
-    
+  console.log("iam called", payload);
+
   try {
     const response = await axios({
       method: "GET",
@@ -61,23 +63,23 @@ const validatePayment = async (payload: any) => {
     });
 
     return response.data;
-
-
   } catch (error) {
     throw new AppError(500, "payment validation failed");
   }
 };
 
-const validatePayment2 = async (payload: { val_id: string; tran_id?: string; status?: string }) => {
+const validatePayment2 = async (payload: {
+  val_id: string;
+  tran_id?: string;
+  status?: string;
+}) => {
   try {
-    const { val_id } = payload;payload
+    const { val_id } = payload;
+    payload;
 
-    // SSLCommerz Validation API (sandbox/prod অনুযায়ী base URL সেট করিস)
     const response = await axios.get(
       `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?val_id=${val_id}&store_id=${config.payment.store_id}&store_passwd=${config.payment.store_pass}&v=1&format=json`
     );
-
-    // এখানে চাইলে DB update করতে পারিস (order status = "paid") ইত্যাদি
     return response.data;
   } catch (error: any) {
     throw new Error(error?.message || "Payment validation failed");
@@ -85,7 +87,6 @@ const validatePayment2 = async (payload: { val_id: string; tran_id?: string; sta
 };
 export const PaymentServicesSSL = {
   initPayment,
-  validatePayment
-  ,
-  validatePayment2
+  validatePayment,
+  validatePayment2,
 };

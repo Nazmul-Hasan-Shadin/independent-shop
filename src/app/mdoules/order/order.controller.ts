@@ -5,6 +5,8 @@ import { OrderServices } from "./order.services";
 import { IAuthUser } from "../../../interface/common";
 
 const createOrder = catchAsync(async (req, res, next) => {
+  console.log('hiç');
+  
   const result = await OrderServices.createOrder(req.body);
 
   sendResponse(res, {

@@ -15,14 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderServices = void 0;
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
 const createOrder = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const { shopId, customerId, totalAmount, orderItems } = payload;
+    const { shopId, customerId, totalAmount, orderItems, status } = payload;
+    console.log(shopId, customerId, totalAmount, orderItems, ';bola');
     // Create the order and associated order items
     return prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const order = yield tx.order.create({
             data: {
-                shopId,
-                customerId,
+                shop: {
+                    connect: { id: shopId },
+                },
+                customer: {
+                    connect: { id: customerId },
+                },
                 totalAmount,
+                status: status,
                 orderItems: {
                     create: orderItems.map((item) => ({
                         productId: item.productId,

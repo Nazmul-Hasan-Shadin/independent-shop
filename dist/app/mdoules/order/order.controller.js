@@ -17,6 +17,7 @@ const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const order_services_1 = require("./order.services");
 const createOrder = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('hiç');
     const result = yield order_services_1.OrderServices.createOrder(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: 201,

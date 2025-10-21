@@ -2,15 +2,21 @@ import { IAuthUser } from "../../../interface/common";
 import prisma from "../../../utils/prisma";
 
 const createOrder = async (payload: any) => {
-  const { shopId, customerId, totalAmount, orderItems } = payload;
+  const { shopId, customerId, totalAmount, orderItems, status } = payload;
+  console.log(shopId, customerId, totalAmount, orderItems,';bola');
 
   // Create the order and associated order items
   return prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
       data: {
-        shopId,
-        customerId,
+        shop:{
+          connect: { id: shopId }, 
+        },
+         customer: {
+          connect: { id: customerId },
+        },
         totalAmount,
+        status: status,
         orderItems: {
           create: orderItems.map((item: any) => ({
             productId: item.productId,
@@ -24,7 +30,7 @@ const createOrder = async (payload: any) => {
       },
     });
 
-  await  Promise.all(
+    await Promise.all(
       orderItems.map((order: any) =>
         tx.product.update({
           where: {

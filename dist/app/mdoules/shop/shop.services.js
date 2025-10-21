@@ -46,7 +46,10 @@ const getTopTenShop = () => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('iam hit');
     const { searchTerm } = filterQuery, othersFilter = __rest(filterQuery, ["searchTerm"]);
+    console.log(othersFilter, 'otherFileters');
+    console.log(filterQuery, 'filterquery');
     const andCondition = [];
     if (searchTerm) {
         andCondition.push({
@@ -58,11 +61,12 @@ const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, f
             })),
         });
     }
-    const filteredQuery = Object.assign({}, othersFilter);
+    const filteredQuery = Object.assign({}, options);
     const excludePaginationParameterFromQuery = [
         "limit",
         "page",
         "orderBy",
+        'searchTerm',
         "sortBy",
     ];
     for (const key of excludePaginationParameterFromQuery) {
@@ -96,7 +100,15 @@ const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, f
         take: limit,
         orderBy: filterQuery.sortBy && (filterQuery === null || filterQuery === void 0 ? void 0 : filterQuery.orderBy) ? { [filterQuery.orderBy]: filterQuery.sortBy } : { createdAt: 'asc' }
     });
-    return result;
+    const total = yield prisma_1.default.product.count({ where: filteredWhereCondition });
+    return {
+        meta: {
+            page,
+            limit,
+            total,
+        },
+        data: result,
+    };
 });
 const getShopById = (shopId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.shop.findUnique({

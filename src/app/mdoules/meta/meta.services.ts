@@ -19,19 +19,19 @@ const fetchDashboardMetaData = async (user: IAuthUser) => {
 const getAdminMetaData = async (user: IAuthUser) => {
   const vendorCount = await prisma.user.count({
     where: {
-      role:Role.vendor,
+      role: Role.vendor,
     },
   });
   const userCount = await prisma.user.count({
-    where:{
-      role:Role.user
-    }
+    where: {
+      role: Role.user,
+    },
   });
-    const adminCount = await prisma.user.count({
-      where:{
-        role:Role.admin
-      }
-    });
+  const adminCount = await prisma.user.count({
+    where: {
+      role: Role.admin,
+    },
+  });
   const totalRevenu = await prisma.order.aggregate({
     _sum: {
       totalAmount: true,
@@ -40,8 +40,8 @@ const getAdminMetaData = async (user: IAuthUser) => {
   return {
     vendorCount,
     userCount,
-    totalRevenu:totalRevenu?._sum?.totalAmount,
-    adminCount
+    totalRevenu: totalRevenu?._sum?.totalAmount,
+    adminCount,
   };
 };
 
@@ -91,9 +91,24 @@ const getVendorMetaData = async (user: IAuthUser) => {
     },
   });
 
+  const saleCountByMonth = await prisma.$queryRaw`
+  SELECT 
+    DATE_TRUNC('month', "createdAt") AS month,
+    COUNT(*) AS count
+  FROM "orders"
+  GROUP BY month
+  ORDER BY month ASC
+`;
+
   //   console.log( {orderCount,totalRevenu,totalReview,productCount});
 
-  return { orderCount,  totalRevenu:totalRevenu?._sum?.totalAmount, totalReview, productCount };
+  return {
+    orderCount,
+    totalRevenu: totalRevenu?._sum?.totalAmount,
+    totalReview,
+    productCount,
+    saleCountByMonth
+  };
 };
 
 // const getUserMetaData = async (user: IAuthUser) => {
@@ -110,7 +125,6 @@ const getVendorMetaData = async (user: IAuthUser) => {
 //   });
 // };
 
-
 // const getBarChartData=async()=>{
 //      const saleCountByMonth:{month:Date}=await prisma.$queryRaw`
 //      SELECT DATE_TRUNC('month','createdAt') AS month;
@@ -120,7 +134,6 @@ const getVendorMetaData = async (user: IAuthUser) => {
 //      ORDER BY month ASC
 //      `
 // }
-
 
 export const MetaServices = {
   fetchDashboardMetaData,
