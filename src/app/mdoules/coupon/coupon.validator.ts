@@ -30,7 +30,7 @@ const couponValidator = async (payload: {
     throw new AppError(400, "Coupon usage limit reached")
   }
 //    =========user usage check =====
- const userUsed= await isCouponExist.usages.filter((u)=>u.userId===payload.userId).length;
+ const userUsed=isCouponExist.usages.filter((u)=>u.userId===payload.userId).length;
 
   if (isCouponExist.maxUsagePerUser && userUsed >=isCouponExist.maxUsagePerUser) {
       throw new AppError(400, "User limit exceeded")

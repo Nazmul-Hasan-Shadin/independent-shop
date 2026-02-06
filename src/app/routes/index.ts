@@ -11,6 +11,7 @@ import { PaymentRoutes } from "../mdoules/payment/payment.route";
 import { BannerRoutes } from "../mdoules/banner/banner.route";
 import { PaymentRoutesSsl } from "../mdoules/SSLPAYMENT/payment.route";
 import { MetaRoutes } from "../mdoules/meta/meta.route";
+import { CouponRoutes } from "../mdoules/coupon/coupon.route";
 
 const router = express.Router();
 
@@ -62,6 +63,10 @@ const moduleRoutes = [
     {
     path:'',
     route:MetaRoutes
+  },
+      {
+    path:'',
+    route:CouponRoutes
   }
 
 ];

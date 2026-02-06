@@ -254,7 +254,7 @@ model CouponUsage {
 
   @@index([couponId])
   @@index([userId])
-  @@unique([couponId, userId, orderId])
+  @@unique([couponId, userId])
 }
 
 model Banner {

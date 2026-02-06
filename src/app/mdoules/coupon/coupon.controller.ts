@@ -13,6 +13,17 @@ export const applyCouponController = catchAsync(async (req, res, next) => {
   });
 });
 
-export const ApplyCouponController={
-       applyCouponController
-}
+const createVendorCoupon = catchAsync(async (req, res, next) => {
+  const result = await CouponServices.createVendorCoupon(req.user.email,req.body);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Coupon has created",
+    data: result,
+  });
+});
+export const ApplyCouponController = {
+  applyCouponController,
+  createVendorCoupon,
+};

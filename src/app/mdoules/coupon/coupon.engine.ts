@@ -1,7 +1,7 @@
 import { Coupon, DiscountType } from "../../../generated/prisma/client";
 
 export const calculateCouponDiscount = async (
-  coupon: any,
+  coupon:Coupon,
   cartTotal: number,
 ) => {
   const benefit = coupon.benefits[0];
