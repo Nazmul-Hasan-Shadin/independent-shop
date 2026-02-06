@@ -58,7 +58,7 @@ const updateCategory = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
     });
 }));
 const deleteCategory = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { categoryId } = req.params;
+    const categoryId = req.params.categoryId;
     const result = yield categroy_services_1.CategoryServices.deleteCategory(categoryId);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,

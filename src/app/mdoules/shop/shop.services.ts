@@ -1,5 +1,5 @@
 
-import { Prisma, Shop } from "@prisma/client";
+import { Prisma, Shop } from "../../../generated/prisma/client";
 import prisma from "../../../utils/prisma";
 import { Request } from "express";
 

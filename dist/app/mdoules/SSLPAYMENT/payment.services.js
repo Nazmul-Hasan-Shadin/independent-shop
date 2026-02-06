@@ -22,7 +22,7 @@ const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* (
         currency: "BDT",
         tran_id: orderInfo.transactionId, // use unique tran_id for each api call
         success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-        // success_url: "http://localhost:3000/success-payment",
+        // success_url: `https://44b35636cdbc.ngrok-free.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
         fail_url: "http://localhost:3030/fail",
         cancel_url: "http://localhost:3030/cancel",
         ipn_url: "https://independent-shop.vercel.app/payment-gate/ipn",

@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthServices = void 0;
-const client_1 = require("@prisma/client");
+const enums_1 = require("../../../generated/prisma/enums");
 const config_1 = __importDefault(require("../../../config"));
 const jwtUtils_1 = require("../../../utils/jwtUtils");
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
@@ -25,7 +25,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = yield prisma_1.default.user.findUniqueOrThrow({
         where: {
             email: payload.email,
-            status: client_1.UserStatus.ACTIVE,
+            status: enums_1.UserStatus.ACTIVE,
         },
     });
     if (!userData) {
@@ -46,7 +46,7 @@ const changePassword = (user, payload) => __awaiter(void 0, void 0, void 0, func
     const userData = yield prisma_1.default.user.findUniqueOrThrow({
         where: {
             email: user.email,
-            status: client_1.UserStatus.ACTIVE,
+            status: enums_1.UserStatus.ACTIVE,
         },
     });
     const isCorrectPassword = yield bcrypt_1.default.compare(payload.oldPassword, userData.password);

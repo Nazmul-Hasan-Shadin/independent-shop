@@ -25,7 +25,7 @@ const getCategory = catchAsync(async (req, res) => {
   });
 });
 const getCategoryById = catchAsync(async (req, res) => {
-  const result = await CategoryServices.getCategoryById(req.params.id);
+  const result = await CategoryServices.getCategoryById(req.params.id as string);
 
   sendResponse(res, {
     statusCode: 200,
@@ -39,7 +39,7 @@ const updateCategory = catchAsync(async (req, res, next) => {
   const { categoryId } = req.params;
   const { name, description } = req.body;
 
-  const updatedCategory = await CategoryServices.updateCategory(categoryId, {
+  const updatedCategory = await CategoryServices.updateCategory(categoryId as string, {
     name,
     description,
   });
@@ -53,7 +53,7 @@ const updateCategory = catchAsync(async (req, res, next) => {
 });
 
 const deleteCategory = catchAsync(async (req, res, next) => {
-  const { categoryId } = req.params;
+  const categoryId = req.params.categoryId as string;
 
   const result = await CategoryServices.deleteCategory(categoryId);
 

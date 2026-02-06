@@ -2,7 +2,7 @@ import express from "express";
 
 import { FollowerController } from "./shopFollow.controller";
 import auth from "../Auth/auth";
-import { Role } from "@prisma/client";
+import { Role } from "../../../generated/prisma/client";
 
 const router = express();
 

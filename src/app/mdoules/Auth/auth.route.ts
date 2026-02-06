@@ -1,7 +1,7 @@
 import express from "express";
 import { AuthController } from "./auth.controller";
 import auth from "./auth";
-import { Role } from "@prisma/client";
+import { Role } from "../../../generated/prisma/enums";
 
 const router = express.Router();
 

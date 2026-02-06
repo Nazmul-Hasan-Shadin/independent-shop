@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { CategoryController } from "./category.controller";
 import auth from "../Auth/auth";
-import { Role } from "@prisma/client";
+import { Role } from "../../../generated/prisma/enums"; 
 import { fileUpload } from "../../../utils/fileUploader";
 
 const router = express();

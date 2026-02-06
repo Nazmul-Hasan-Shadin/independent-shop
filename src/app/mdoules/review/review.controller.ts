@@ -21,7 +21,7 @@ const addReview = catchAsync(async (req, res) => {
 const getProductWithReview = catchAsync(async (req, res, next) => {
   const { productId } = req.params; // Get productId from URL params
 
-  const product = await ReviewServices.getReviewWithProductDetails(productId);
+  const product = await ReviewServices.getReviewWithProductDetails(productId as string);
 
   sendResponse(res, {
     statusCode: 200,

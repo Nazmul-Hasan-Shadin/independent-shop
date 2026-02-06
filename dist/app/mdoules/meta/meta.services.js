@@ -13,15 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MetaServices = void 0;
-const client_1 = require("@prisma/client");
+const enums_1 = require("../../../generated/prisma/enums");
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
 const AppError_1 = __importDefault(require("../../error/AppError"));
 const fetchDashboardMetaData = (user) => __awaiter(void 0, void 0, void 0, function* () {
     switch (user.role) {
-        case client_1.Role.admin:
+        case enums_1.Role.admin:
             return getAdminMetaData(user);
             break;
-        case client_1.Role.vendor:
+        case enums_1.Role.vendor:
             return getVendorMetaData(user);
             break;
         default:
@@ -32,18 +32,18 @@ const getAdminMetaData = (user) => __awaiter(void 0, void 0, void 0, function* (
     var _a;
     const vendorCount = yield prisma_1.default.user.count({
         where: {
-            role: client_1.Role.vendor,
+            role: enums_1.Role.vendor,
         },
     });
     const userCount = yield prisma_1.default.user.count({
         where: {
-            role: client_1.Role.user
-        }
+            role: enums_1.Role.user,
+        },
     });
     const adminCount = yield prisma_1.default.user.count({
         where: {
-            role: client_1.Role.admin
-        }
+            role: enums_1.Role.admin,
+        },
     });
     const totalRevenu = yield prisma_1.default.order.aggregate({
         _sum: {
@@ -54,7 +54,7 @@ const getAdminMetaData = (user) => __awaiter(void 0, void 0, void 0, function* (
         vendorCount,
         userCount,
         totalRevenu: (_a = totalRevenu === null || totalRevenu === void 0 ? void 0 : totalRevenu._sum) === null || _a === void 0 ? void 0 : _a.totalAmount,
-        adminCount
+        adminCount,
     };
 });
 const getVendorMetaData = (user) => __awaiter(void 0, void 0, void 0, function* () {
@@ -100,8 +100,26 @@ const getVendorMetaData = (user) => __awaiter(void 0, void 0, void 0, function* 
             },
         },
     });
+    const saleCountByMonth = yield prisma_1.default.$queryRaw `
+  SELECT 
+    DATE_TRUNC('month', "createdAt") AS month,
+    COUNT(*) AS count
+  FROM "orders"
+  GROUP BY month
+  ORDER BY month ASC
+`;
+    const serializedSaleCountByMonth = saleCountByMonth.map((item) => ({
+        month: item.month, // Assuming month is a Date or string, no change needed
+        count: Number(item.count), // Convert BigInt to number
+    }));
     //   console.log( {orderCount,totalRevenu,totalReview,productCount});
-    return { orderCount, totalRevenu: (_a = totalRevenu === null || totalRevenu === void 0 ? void 0 : totalRevenu._sum) === null || _a === void 0 ? void 0 : _a.totalAmount, totalReview, productCount };
+    return {
+        orderCount,
+        totalRevenu: (_a = totalRevenu === null || totalRevenu === void 0 ? void 0 : totalRevenu._sum) === null || _a === void 0 ? void 0 : _a.totalAmount,
+        totalReview,
+        productCount,
+        saleCountByMonth: serializedSaleCountByMonth
+    };
 });
 // const getUserMetaData = async (user: IAuthUser) => {
 //   const vendorCount = await prisma.user.count({

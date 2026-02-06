@@ -29,7 +29,7 @@ const createShop = catchAsync(async (req, res) => {
 });
 
 const shopById = catchAsync(async (req, res) => {
-  const result = await shopServices.getShopById(req.params.id);
+  const result = await shopServices.getShopById(req.params.id as string);
 
   sendResponse(res, {
     statusCode: 200,

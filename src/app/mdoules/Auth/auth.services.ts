@@ -1,4 +1,4 @@
-import { UserStatus } from "@prisma/client";
+import { UserStatus } from "../../../generated/prisma/enums";
 import config from "../../../config";
 import { generateToken } from "../../../utils/jwtUtils";
 import prisma from "../../../utils/prisma";
@@ -30,13 +30,13 @@ const loginUser = async (payload: { email: string; password: string }) => {
   const accessToken = generateToken(
     { email: userData.email, role: userData.role },
     config.jwt.jwt_secret as string,
-    config.jwt.expires_in as string
+    config.jwt.expires_in as any
   );
 
   const refreshtoken = generateToken(
     { email: userData.email, role: userData.role },
     config.jwt.refreshToken_sec as string,
-    config.jwt.refresh_token_expires_in as string
+    config.jwt.refresh_token_expires_in as any
   );
 
   return {

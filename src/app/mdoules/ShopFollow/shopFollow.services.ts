@@ -15,7 +15,7 @@ const followShop = async (user: any, shopId: string) => {
   }
 
   const alreadyFollowing = existingUser.shopFollower?.some(
-    (follower) => follower.shopId === shopId
+    (follower:any) => follower.shopId === shopId
   );
 
   if (alreadyFollowing) {

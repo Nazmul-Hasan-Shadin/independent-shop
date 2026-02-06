@@ -1,6 +1,6 @@
 import express from "express";
 
-import { Role } from "@prisma/client";
+import { Role } from "../../../generated/prisma/enums";
 import { OrderController } from "./order.controller";
 import auth from "../Auth/auth";
 

@@ -1,4 +1,4 @@
-import { Banner } from "@prisma/client";
+import { Banner } from "../../../generated/prisma/client"; 
 import prisma from "../../../utils/prisma";
 
 const createBannerIntoDb = async (bannerInfo: Banner) => {

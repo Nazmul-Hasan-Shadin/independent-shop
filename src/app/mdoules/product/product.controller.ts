@@ -26,7 +26,7 @@ const getAllProduct = catchAsync(async (req, res, next) => {
   });
 });
 const getSingleProduct = catchAsync(async (req, res, next) => {
-  const result = await ProductServices.getSingleProduct(req.params.id);
+  const result = await ProductServices.getSingleProduct(req.params.id as string);
 
   sendResponse(res, {
     statusCode: 200,
@@ -40,7 +40,7 @@ const incrementProductViewCOunt = catchAsync(async (req, res, next) => {
   const userAgent = req.get("User-Agent") || "";
 
   const result = await ProductServices.increaseViewCount(
-    req.params.id,
+    req.params.id as string,
     req.body,
     ip,
     userAgent
@@ -56,7 +56,7 @@ const incrementProductViewCOunt = catchAsync(async (req, res, next) => {
 
 const getProductByShopId = catchAsync(async (req, res, next) => {
   const result = await ProductServices.getProductByShopId(
-    req.params.shopId,
+    req.params.shopId as string,
     req.query
   );
 
@@ -68,7 +68,7 @@ const getProductByShopId = catchAsync(async (req, res, next) => {
   });
 });
 const updateProduct = catchAsync(async (req, res, next) => {
-  const result = await ProductServices.updateProduct(req.params.id, req.body);
+  const result = await ProductServices.updateProduct(req.params.id as string, req.body);
 
   sendResponse(res, {
     statusCode: 200,
@@ -79,7 +79,7 @@ const updateProduct = catchAsync(async (req, res, next) => {
 });
 
 const deleteProduct = catchAsync(async (req, res, next) => {
-  const result = await ProductServices.deleteProduct(req.params.id);
+  const result = await ProductServices.deleteProduct(req.params.id as string);
 
   sendResponse(res, {
     statusCode: 200,

@@ -34,9 +34,9 @@ const getAllOrders = catchAsync(
 );
 
 const getOrderById = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params ;
 
-  const result = await OrderServices.getOrderById(id);
+  const result = await OrderServices.getOrderById(id as string);
 
   sendResponse(res, {
     statusCode: 200,
