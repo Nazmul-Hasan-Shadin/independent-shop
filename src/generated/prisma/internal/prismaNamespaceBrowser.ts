@@ -61,6 +61,10 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Review: 'Review',
   ShopFollower: 'ShopFollower',
+  Coupon: 'Coupon',
+  CouponRule: 'CouponRule',
+  CouponBenefit: 'CouponBenefit',
+  CouponUsage: 'CouponUsage',
   Banner: 'Banner'
 } as const
 
@@ -175,6 +179,8 @@ export const OrderScalarFieldEnum = {
   customerId: 'customerId',
   status: 'status',
   totalAmount: 'totalAmount',
+  discountAmount: 'discountAmount',
+  appliedCouponCode: 'appliedCouponCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -212,6 +218,66 @@ export const ShopFollowerScalarFieldEnum = {
 } as const
 
 export type ShopFollowerScalarFieldEnum = (typeof ShopFollowerScalarFieldEnum)[keyof typeof ShopFollowerScalarFieldEnum]
+
+
+export const CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  scope: 'scope',
+  vendorId: 'vendorId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  maxUsage: 'maxUsage',
+  maxUsagePerUser: 'maxUsagePerUser',
+  priority: 'priority',
+  isStackable: 'isStackable',
+  isExclusive: 'isExclusive',
+  totalUsageCount: 'totalUsageCount',
+  totalDiscountGiven: 'totalDiscountGiven',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+export const CouponRuleScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  minPurchase: 'minPurchase',
+  minQuantity: 'minQuantity',
+  categoryIds: 'categoryIds',
+  productIds: 'productIds',
+  newUserOnly: 'newUserOnly'
+} as const
+
+export type CouponRuleScalarFieldEnum = (typeof CouponRuleScalarFieldEnum)[keyof typeof CouponRuleScalarFieldEnum]
+
+
+export const CouponBenefitScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  discountType: 'discountType',
+  value: 'value',
+  maxDiscount: 'maxDiscount'
+} as const
+
+export type CouponBenefitScalarFieldEnum = (typeof CouponBenefitScalarFieldEnum)[keyof typeof CouponBenefitScalarFieldEnum]
+
+
+export const CouponUsageScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  userId: 'userId',
+  orderId: 'orderId',
+  usedAt: 'usedAt'
+} as const
+
+export type CouponUsageScalarFieldEnum = (typeof CouponUsageScalarFieldEnum)[keyof typeof CouponUsageScalarFieldEnum]
 
 
 export const BannerScalarFieldEnum = {

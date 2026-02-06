@@ -207,6 +207,7 @@ export type ShopWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Shop"> | Date | string
   status?: Prisma.EnumShopStatusFilter<"Shop"> | $Enums.ShopStatus
   vendor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  coupons?: Prisma.CouponListRelationFilter
   product?: Prisma.ProductListRelationFilter
   Order?: Prisma.OrderListRelationFilter
   shopFollower?: Prisma.ShopFollowerListRelationFilter
@@ -222,6 +223,7 @@ export type ShopOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   vendor?: Prisma.UserOrderByWithRelationInput
+  coupons?: Prisma.CouponOrderByRelationAggregateInput
   product?: Prisma.ProductOrderByRelationAggregateInput
   Order?: Prisma.OrderOrderByRelationAggregateInput
   shopFollower?: Prisma.ShopFollowerOrderByRelationAggregateInput
@@ -240,6 +242,7 @@ export type ShopWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Shop"> | Date | string
   status?: Prisma.EnumShopStatusFilter<"Shop"> | $Enums.ShopStatus
   vendor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  coupons?: Prisma.CouponListRelationFilter
   product?: Prisma.ProductListRelationFilter
   Order?: Prisma.OrderListRelationFilter
   shopFollower?: Prisma.ShopFollowerListRelationFilter
@@ -282,6 +285,7 @@ export type ShopCreateInput = {
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
   vendor: Prisma.UserCreateNestedOneWithoutShopInput
+  coupons?: Prisma.CouponCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerCreateNestedManyWithoutShopInput
@@ -296,6 +300,7 @@ export type ShopUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductUncheckedCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerUncheckedCreateNestedManyWithoutShopInput
@@ -310,6 +315,7 @@ export type ShopUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
   vendor?: Prisma.UserUpdateOneRequiredWithoutShopNestedInput
+  coupons?: Prisma.CouponUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUpdateManyWithoutShopNestedInput
@@ -324,6 +330,7 @@ export type ShopUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUncheckedUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUncheckedUpdateManyWithoutShopNestedInput
@@ -482,6 +489,22 @@ export type ShopUpdateOneRequiredWithoutShopFollowerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShopUpdateToOneWithWhereWithoutShopFollowerInput, Prisma.ShopUpdateWithoutShopFollowerInput>, Prisma.ShopUncheckedUpdateWithoutShopFollowerInput>
 }
 
+export type ShopCreateNestedOneWithoutCouponsInput = {
+  create?: Prisma.XOR<Prisma.ShopCreateWithoutCouponsInput, Prisma.ShopUncheckedCreateWithoutCouponsInput>
+  connectOrCreate?: Prisma.ShopCreateOrConnectWithoutCouponsInput
+  connect?: Prisma.ShopWhereUniqueInput
+}
+
+export type ShopUpdateOneWithoutCouponsNestedInput = {
+  create?: Prisma.XOR<Prisma.ShopCreateWithoutCouponsInput, Prisma.ShopUncheckedCreateWithoutCouponsInput>
+  connectOrCreate?: Prisma.ShopCreateOrConnectWithoutCouponsInput
+  upsert?: Prisma.ShopUpsertWithoutCouponsInput
+  disconnect?: Prisma.ShopWhereInput | boolean
+  delete?: Prisma.ShopWhereInput | boolean
+  connect?: Prisma.ShopWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShopUpdateToOneWithWhereWithoutCouponsInput, Prisma.ShopUpdateWithoutCouponsInput>, Prisma.ShopUncheckedUpdateWithoutCouponsInput>
+}
+
 export type ShopCreateWithoutVendorInput = {
   id?: string
   name: string
@@ -490,6 +513,7 @@ export type ShopCreateWithoutVendorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerCreateNestedManyWithoutShopInput
@@ -503,6 +527,7 @@ export type ShopUncheckedCreateWithoutVendorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductUncheckedCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerUncheckedCreateNestedManyWithoutShopInput
@@ -532,6 +557,7 @@ export type ShopUpdateWithoutVendorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUpdateManyWithoutShopNestedInput
@@ -545,6 +571,7 @@ export type ShopUncheckedUpdateWithoutVendorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUncheckedUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUncheckedUpdateManyWithoutShopNestedInput
@@ -559,6 +586,7 @@ export type ShopCreateWithoutProductInput = {
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
   vendor: Prisma.UserCreateNestedOneWithoutShopInput
+  coupons?: Prisma.CouponCreateNestedManyWithoutVendorInput
   Order?: Prisma.OrderCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerCreateNestedManyWithoutShopInput
 }
@@ -572,6 +600,7 @@ export type ShopUncheckedCreateWithoutProductInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedCreateNestedManyWithoutVendorInput
   Order?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerUncheckedCreateNestedManyWithoutShopInput
 }
@@ -601,6 +630,7 @@ export type ShopUpdateWithoutProductInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
   vendor?: Prisma.UserUpdateOneRequiredWithoutShopNestedInput
+  coupons?: Prisma.CouponUpdateManyWithoutVendorNestedInput
   Order?: Prisma.OrderUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUpdateManyWithoutShopNestedInput
 }
@@ -614,6 +644,7 @@ export type ShopUncheckedUpdateWithoutProductInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedUpdateManyWithoutVendorNestedInput
   Order?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUncheckedUpdateManyWithoutShopNestedInput
 }
@@ -627,6 +658,7 @@ export type ShopCreateWithoutOrderInput = {
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
   vendor: Prisma.UserCreateNestedOneWithoutShopInput
+  coupons?: Prisma.CouponCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerCreateNestedManyWithoutShopInput
 }
@@ -640,6 +672,7 @@ export type ShopUncheckedCreateWithoutOrderInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductUncheckedCreateNestedManyWithoutShopInput
   shopFollower?: Prisma.ShopFollowerUncheckedCreateNestedManyWithoutShopInput
 }
@@ -669,6 +702,7 @@ export type ShopUpdateWithoutOrderInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
   vendor?: Prisma.UserUpdateOneRequiredWithoutShopNestedInput
+  coupons?: Prisma.CouponUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUpdateManyWithoutShopNestedInput
 }
@@ -682,6 +716,7 @@ export type ShopUncheckedUpdateWithoutOrderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUncheckedUpdateManyWithoutShopNestedInput
   shopFollower?: Prisma.ShopFollowerUncheckedUpdateManyWithoutShopNestedInput
 }
@@ -695,6 +730,7 @@ export type ShopCreateWithoutShopFollowerInput = {
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
   vendor: Prisma.UserCreateNestedOneWithoutShopInput
+  coupons?: Prisma.CouponCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderCreateNestedManyWithoutShopInput
 }
@@ -708,6 +744,7 @@ export type ShopUncheckedCreateWithoutShopFollowerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedCreateNestedManyWithoutVendorInput
   product?: Prisma.ProductUncheckedCreateNestedManyWithoutShopInput
   Order?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
 }
@@ -737,6 +774,7 @@ export type ShopUpdateWithoutShopFollowerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
   vendor?: Prisma.UserUpdateOneRequiredWithoutShopNestedInput
+  coupons?: Prisma.CouponUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUpdateManyWithoutShopNestedInput
 }
@@ -750,8 +788,81 @@ export type ShopUncheckedUpdateWithoutShopFollowerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  coupons?: Prisma.CouponUncheckedUpdateManyWithoutVendorNestedInput
   product?: Prisma.ProductUncheckedUpdateManyWithoutShopNestedInput
   Order?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+}
+
+export type ShopCreateWithoutCouponsInput = {
+  id?: string
+  name: string
+  logo?: string | null
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.ShopStatus
+  vendor: Prisma.UserCreateNestedOneWithoutShopInput
+  product?: Prisma.ProductCreateNestedManyWithoutShopInput
+  Order?: Prisma.OrderCreateNestedManyWithoutShopInput
+  shopFollower?: Prisma.ShopFollowerCreateNestedManyWithoutShopInput
+}
+
+export type ShopUncheckedCreateWithoutCouponsInput = {
+  id?: string
+  vendorId: string
+  name: string
+  logo?: string | null
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.ShopStatus
+  product?: Prisma.ProductUncheckedCreateNestedManyWithoutShopInput
+  Order?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
+  shopFollower?: Prisma.ShopFollowerUncheckedCreateNestedManyWithoutShopInput
+}
+
+export type ShopCreateOrConnectWithoutCouponsInput = {
+  where: Prisma.ShopWhereUniqueInput
+  create: Prisma.XOR<Prisma.ShopCreateWithoutCouponsInput, Prisma.ShopUncheckedCreateWithoutCouponsInput>
+}
+
+export type ShopUpsertWithoutCouponsInput = {
+  update: Prisma.XOR<Prisma.ShopUpdateWithoutCouponsInput, Prisma.ShopUncheckedUpdateWithoutCouponsInput>
+  create: Prisma.XOR<Prisma.ShopCreateWithoutCouponsInput, Prisma.ShopUncheckedCreateWithoutCouponsInput>
+  where?: Prisma.ShopWhereInput
+}
+
+export type ShopUpdateToOneWithWhereWithoutCouponsInput = {
+  where?: Prisma.ShopWhereInput
+  data: Prisma.XOR<Prisma.ShopUpdateWithoutCouponsInput, Prisma.ShopUncheckedUpdateWithoutCouponsInput>
+}
+
+export type ShopUpdateWithoutCouponsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  vendor?: Prisma.UserUpdateOneRequiredWithoutShopNestedInput
+  product?: Prisma.ProductUpdateManyWithoutShopNestedInput
+  Order?: Prisma.OrderUpdateManyWithoutShopNestedInput
+  shopFollower?: Prisma.ShopFollowerUpdateManyWithoutShopNestedInput
+}
+
+export type ShopUncheckedUpdateWithoutCouponsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumShopStatusFieldUpdateOperationsInput | $Enums.ShopStatus
+  product?: Prisma.ProductUncheckedUpdateManyWithoutShopNestedInput
+  Order?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  shopFollower?: Prisma.ShopFollowerUncheckedUpdateManyWithoutShopNestedInput
 }
 
 
@@ -760,12 +871,14 @@ export type ShopUncheckedUpdateWithoutShopFollowerInput = {
  */
 
 export type ShopCountOutputType = {
+  coupons: number
   product: number
   Order: number
   shopFollower: number
 }
 
 export type ShopCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coupons?: boolean | ShopCountOutputTypeCountCouponsArgs
   product?: boolean | ShopCountOutputTypeCountProductArgs
   Order?: boolean | ShopCountOutputTypeCountOrderArgs
   shopFollower?: boolean | ShopCountOutputTypeCountShopFollowerArgs
@@ -779,6 +892,13 @@ export type ShopCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the ShopCountOutputType
    */
   select?: Prisma.ShopCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ShopCountOutputType without action
+ */
+export type ShopCountOutputTypeCountCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponWhereInput
 }
 
 /**
@@ -813,6 +933,7 @@ export type ShopSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   status?: boolean
   vendor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  coupons?: boolean | Prisma.Shop$couponsArgs<ExtArgs>
   product?: boolean | Prisma.Shop$productArgs<ExtArgs>
   Order?: boolean | Prisma.Shop$OrderArgs<ExtArgs>
   shopFollower?: boolean | Prisma.Shop$shopFollowerArgs<ExtArgs>
@@ -857,6 +978,7 @@ export type ShopSelectScalar = {
 export type ShopOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "name" | "logo" | "description" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["shop"]>
 export type ShopInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  coupons?: boolean | Prisma.Shop$couponsArgs<ExtArgs>
   product?: boolean | Prisma.Shop$productArgs<ExtArgs>
   Order?: boolean | Prisma.Shop$OrderArgs<ExtArgs>
   shopFollower?: boolean | Prisma.Shop$shopFollowerArgs<ExtArgs>
@@ -873,6 +995,7 @@ export type $ShopPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Shop"
   objects: {
     vendor: Prisma.$UserPayload<ExtArgs>
+    coupons: Prisma.$CouponPayload<ExtArgs>[]
     product: Prisma.$ProductPayload<ExtArgs>[]
     Order: Prisma.$OrderPayload<ExtArgs>[]
     shopFollower: Prisma.$ShopFollowerPayload<ExtArgs>[]
@@ -1281,6 +1404,7 @@ readonly fields: ShopFieldRefs;
 export interface Prisma__ShopClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   vendor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  coupons<T extends Prisma.Shop$couponsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shop$couponsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   product<T extends Prisma.Shop$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shop$productArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Order<T extends Prisma.Shop$OrderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shop$OrderArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shopFollower<T extends Prisma.Shop$shopFollowerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shop$shopFollowerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShopFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1714,6 +1838,30 @@ export type ShopDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Shops to delete.
    */
   limit?: number
+}
+
+/**
+ * Shop.coupons
+ */
+export type Shop$couponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coupon
+   */
+  select?: Prisma.CouponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coupon
+   */
+  omit?: Prisma.CouponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponInclude<ExtArgs> | null
+  where?: Prisma.CouponWhereInput
+  orderBy?: Prisma.CouponOrderByWithRelationInput | Prisma.CouponOrderByWithRelationInput[]
+  cursor?: Prisma.CouponWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponScalarFieldEnum | Prisma.CouponScalarFieldEnum[]
 }
 
 /**

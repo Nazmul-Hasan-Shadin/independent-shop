@@ -68,6 +68,26 @@ export type Review = Prisma.ReviewModel
  */
 export type ShopFollower = Prisma.ShopFollowerModel
 /**
+ * Model Coupon
+ * 
+ */
+export type Coupon = Prisma.CouponModel
+/**
+ * Model CouponRule
+ * 
+ */
+export type CouponRule = Prisma.CouponRuleModel
+/**
+ * Model CouponBenefit
+ * 
+ */
+export type CouponBenefit = Prisma.CouponBenefitModel
+/**
+ * Model CouponUsage
+ * 
+ */
+export type CouponUsage = Prisma.CouponUsageModel
+/**
  * Model Banner
  * 
  */

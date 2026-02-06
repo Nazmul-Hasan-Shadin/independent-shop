@@ -30,7 +30,7 @@ model User {
   productView ProductView[]
 
   review Review[]
-
+usageCoupon CouponUsage[]
   shop         Shop?
   shopFollower ShopFollower[]
   userData     UserData?
@@ -58,6 +58,7 @@ model Shop {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   vendor       User           @relation(fields: [vendorId], references: [id])
+  coupons Coupon[] 
   product      Product[]
   Order        Order[]
   shopFollower ShopFollower[]
@@ -118,10 +119,19 @@ model Order {
   id          String        @id @default(uuid())
   shopId      String
   shop        Shop          @relation(fields: [shopId], references: [id])
+
   customerId  String
   customer    User          @relation(fields: [customerId], references: [id])
+
   status      PaymentStatus @default(PENDING)
+
   totalAmount Float
+
+  discountAmount Float @default(0)
+  appliedCouponCode String?
+
+  couponUsage CouponUsage[]
+
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   orderItems  OrderItem[]
@@ -162,6 +172,90 @@ model ShopFollower {
 
   @@unique([userId, shopId])
 }
+ 
+
+model Coupon {
+  id String @id @default(uuid())
+
+  code String @unique
+  title String
+  description String?
+
+  type CouponType
+  scope CouponScope
+
+  vendorId String?
+  vendor Shop? @relation(fields: [vendorId], references: [id])
+
+  startDate DateTime
+  endDate DateTime
+  isActive Boolean @default(true)
+
+  maxUsage Int?
+  maxUsagePerUser Int?
+
+  priority Int @default(1)
+
+  isStackable Boolean @default(false)
+  isExclusive Boolean @default(false)
+
+  totalUsageCount Int @default(0)
+  totalDiscountGiven Float @default(0)
+
+  rules CouponRule[]
+  benefits CouponBenefit[]
+  usages CouponUsage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([code])
+  @@index([startDate, endDate])
+}
+
+model CouponRule {
+  id String @id @default(uuid())
+  couponId String
+
+  minPurchase Float?
+  minQuantity Int?
+
+  categoryIds String[]
+  productIds String[]
+
+  newUserOnly Boolean?
+
+  coupon Coupon @relation(fields: [couponId], references: [id])
+}
+
+model CouponBenefit {
+  id String @id @default(uuid())
+  couponId String
+
+  discountType DiscountType
+  value Float
+  maxDiscount Float?
+
+  coupon Coupon @relation(fields: [couponId], references: [id])
+}
+
+model CouponUsage {
+  id String @id @default(uuid())
+
+  couponId String
+  userId String
+  orderId String?
+
+  order Order? @relation(fields: [orderId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  coupon Coupon @relation(fields: [couponId], references: [id])
+
+  usedAt DateTime @default(now())
+
+  @@index([couponId])
+  @@index([userId])
+  @@unique([couponId, userId, orderId])
+}
 
 model Banner {
   id       String  @id @default(uuid())
@@ -192,6 +286,24 @@ enum ShopStatus {
   INACTIVE
   PENDING
 }
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+  FREE_SHIPPING
+}
+enum CouponType {
+  PLATFORM
+  VENDOR
+}
+
+enum CouponScope {
+  CART
+  PRODUCT
+  SHIPPING
+}
+
+
 
 enum PaymentStatus {
   PENDING

@@ -36,6 +36,32 @@ export const ShopStatus = {
 export type ShopStatus = (typeof ShopStatus)[keyof typeof ShopStatus]
 
 
+export const DiscountType = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED: 'FIXED',
+  FREE_SHIPPING: 'FREE_SHIPPING'
+} as const
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
+
+
+export const CouponType = {
+  PLATFORM: 'PLATFORM',
+  VENDOR: 'VENDOR'
+} as const
+
+export type CouponType = (typeof CouponType)[keyof typeof CouponType]
+
+
+export const CouponScope = {
+  CART: 'CART',
+  PRODUCT: 'PRODUCT',
+  SHIPPING: 'SHIPPING'
+} as const
+
+export type CouponScope = (typeof CouponScope)[keyof typeof CouponScope]
+
+
 export const PaymentStatus = {
   PENDING: 'PENDING',
   COMPLETE: 'COMPLETE',
