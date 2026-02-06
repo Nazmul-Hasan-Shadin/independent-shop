@@ -1,21 +1,26 @@
 import { Coupon } from "../../../generated/prisma/client";
 import prisma from "../../../utils/prisma";
+import AppError from "../../error/AppError";
 import calculateCouponDiscount from "./coupon.engine";
 import couponValidator from "./coupon.validator";
 
 const applyCouponService = async (payload: any) => {
-  const { code, userId, cartItems } = payload;
+  const { couponCode, userId, cartItems } = payload;
 
   const cartTotal = cartItems.reduce(
     (total: number, item: any) => total + item.price * item.quantity,
     0,
   );
+
+  const cartShopId = cartItems[0].shopId; 
+
   const validateCoupon = await couponValidator({
-    couponCode: code,
+    couponCode: couponCode,
     userId,
     cartTotal,
+    cartShopId
   });
-  const discount = await calculateCouponDiscount(code, cartTotal);
+  const discount = await calculateCouponDiscount(couponCode, cartTotal);
 
   return {
     cartTotal,
@@ -80,9 +85,43 @@ const createVendorCoupon = async (email: string, payload: any) => {
  return createCoupon;
 };
  
- 
+const getAllActiveCoupons = async () => {
+  return prisma.coupon.findMany({
+    where: {
+      isActive: true,
+      startDate: { lte: new Date() },
+      endDate: { gte: new Date() },
+    },
+    include: {
+      benefits: true,
+      rules: true,
+    },
+  });
+};  
+
+// const getVendorCouponAp= async(email:string)=>{
+//     const user= await prisma.user.findUnique({
+//       where:{
+//          email
+//       },
+//       include:{
+//          shop:{
+//             include:{
+//                product:true,
+//                coupons:true,
+//                shopFollower:true
+//             }
+//          },
+        
+          
+//       }
+//     })
+//     if(!user?.shop) throw new AppError(404,'Shop not fount');
+    
+// }
 
 export const CouponServices = {
   applyCouponService,
   createVendorCoupon,
+  getAllActiveCoupons
 };

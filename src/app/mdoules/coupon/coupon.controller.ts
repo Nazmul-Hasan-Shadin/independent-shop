@@ -2,6 +2,19 @@ import catchAsync from "../../../utils/catchAsync";
 import sendResponse from "../../../utils/sendResponse";
 import { CouponServices } from "./coupon.services";
 
+
+
+export const getAllCoupon = catchAsync(async (req, res, next) => {
+  const result = await CouponServices.getAllActiveCoupons();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Coupon are retrieved",
+    data: result,
+  });
+});
+
 export const applyCouponController = catchAsync(async (req, res, next) => {
   const result = await CouponServices.applyCouponService(req.body);
 
@@ -26,4 +39,5 @@ const createVendorCoupon = catchAsync(async (req, res, next) => {
 export const ApplyCouponController = {
   applyCouponController,
   createVendorCoupon,
+  getAllCoupon
 };

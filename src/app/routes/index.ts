@@ -65,7 +65,7 @@ const moduleRoutes = [
     route:MetaRoutes
   },
       {
-    path:'',
+    path:'/coupon',
     route:CouponRoutes
   }
 

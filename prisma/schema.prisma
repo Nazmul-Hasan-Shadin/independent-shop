@@ -51,7 +51,7 @@ model UserData {
 
 model Shop {
   id           String         @id @default(uuid())
-  vendorId     String         @unique
+  vendorId     String         @unique 
   name         String
   logo         String?
   description  String?
