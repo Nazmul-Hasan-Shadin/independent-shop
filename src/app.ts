@@ -8,7 +8,7 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: ['https://independent-mart.vercel.app','http://localhost:3000','http://shop.buybarionline.com'],
+    origin: ['https://independent-mart.vercel.app','http://localhost:3000','https://shop.rodro.online'],
     credentials: true,
   })
 );
