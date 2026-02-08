@@ -24,7 +24,7 @@ const applyCouponService = (payload) => __awaiter(void 0, void 0, void 0, functi
         couponCode: couponCode,
         userId,
         cartTotal,
-        cartShopId
+        cartShopId,
     });
     const discount = yield (0, coupon_engine_1.default)(couponCode, cartTotal);
     return {
@@ -110,5 +110,5 @@ const getAllActiveCoupons = () => __awaiter(void 0, void 0, void 0, function* ()
 exports.CouponServices = {
     applyCouponService,
     createVendorCoupon,
-    getAllActiveCoupons
+    getAllActiveCoupons,
 };

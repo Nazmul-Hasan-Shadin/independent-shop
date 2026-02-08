@@ -44,6 +44,8 @@ const createVendorCoupon = async (email: string, payload: any) => {
     throw new Error("Vendor shop not found");
   }
 
+  
+
   const createCoupon = await prisma.$transaction(async (transaction) => {
     const createCoupon = await transaction.coupon.create({
       data: {
