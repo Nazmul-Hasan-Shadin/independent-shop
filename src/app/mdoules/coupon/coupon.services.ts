@@ -12,13 +12,13 @@ const applyCouponService = async (payload: any) => {
     0,
   );
 
-  const cartShopId = cartItems[0].shopId; 
+  const cartShopId = cartItems[0].shopId;
 
   const validateCoupon = await couponValidator({
     couponCode: couponCode,
     userId,
     cartTotal,
-    cartShopId
+    cartShopId,
   });
   const discount = await calculateCouponDiscount(couponCode, cartTotal);
 
@@ -82,9 +82,9 @@ const createVendorCoupon = async (email: string, payload: any) => {
 
     return createCoupon;
   });
- return createCoupon;
+  return createCoupon;
 };
- 
+
 const getAllActiveCoupons = async () => {
   return prisma.coupon.findMany({
     where: {
@@ -97,7 +97,7 @@ const getAllActiveCoupons = async () => {
       rules: true,
     },
   });
-};  
+};
 
 // const getVendorCouponAp= async(email:string)=>{
 //     const user= await prisma.user.findUnique({
@@ -112,16 +112,15 @@ const getAllActiveCoupons = async () => {
 //                shopFollower:true
 //             }
 //          },
-        
-          
+
 //       }
 //     })
 //     if(!user?.shop) throw new AppError(404,'Shop not fount');
-    
+
 // }
 
 export const CouponServices = {
   applyCouponService,
   createVendorCoupon,
-  getAllActiveCoupons
+  getAllActiveCoupons,
 };

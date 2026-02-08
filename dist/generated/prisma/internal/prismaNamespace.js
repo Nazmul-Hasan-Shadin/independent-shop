@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.BannerScalarFieldEnum = exports.ShopFollowerScalarFieldEnum = exports.ReviewScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.ProductViewScalarFieldEnum = exports.ProductScalarFieldEnum = exports.ShopScalarFieldEnum = exports.UserDataScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.BannerScalarFieldEnum = exports.CouponUsageScalarFieldEnum = exports.CouponBenefitScalarFieldEnum = exports.CouponRuleScalarFieldEnum = exports.CouponScalarFieldEnum = exports.ShopFollowerScalarFieldEnum = exports.ReviewScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.ProductViewScalarFieldEnum = exports.ProductScalarFieldEnum = exports.ShopScalarFieldEnum = exports.UserDataScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 /**
  * Prisma Errors
@@ -113,6 +113,10 @@ exports.ModelName = {
     OrderItem: 'OrderItem',
     Review: 'Review',
     ShopFollower: 'ShopFollower',
+    Coupon: 'Coupon',
+    CouponRule: 'CouponRule',
+    CouponBenefit: 'CouponBenefit',
+    CouponUsage: 'CouponUsage',
     Banner: 'Banner'
 };
 /**
@@ -195,6 +199,8 @@ exports.OrderScalarFieldEnum = {
     customerId: 'customerId',
     status: 'status',
     totalAmount: 'totalAmount',
+    discountAmount: 'discountAmount',
+    appliedCouponCode: 'appliedCouponCode',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -217,6 +223,50 @@ exports.ReviewScalarFieldEnum = {
 exports.ShopFollowerScalarFieldEnum = {
     userId: 'userId',
     shopId: 'shopId'
+};
+exports.CouponScalarFieldEnum = {
+    id: 'id',
+    code: 'code',
+    title: 'title',
+    description: 'description',
+    type: 'type',
+    scope: 'scope',
+    vendorId: 'vendorId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    isActive: 'isActive',
+    maxUsage: 'maxUsage',
+    maxUsagePerUser: 'maxUsagePerUser',
+    priority: 'priority',
+    isStackable: 'isStackable',
+    isExclusive: 'isExclusive',
+    totalUsageCount: 'totalUsageCount',
+    totalDiscountGiven: 'totalDiscountGiven',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.CouponRuleScalarFieldEnum = {
+    id: 'id',
+    couponId: 'couponId',
+    minPurchase: 'minPurchase',
+    minQuantity: 'minQuantity',
+    categoryIds: 'categoryIds',
+    productIds: 'productIds',
+    newUserOnly: 'newUserOnly'
+};
+exports.CouponBenefitScalarFieldEnum = {
+    id: 'id',
+    couponId: 'couponId',
+    discountType: 'discountType',
+    value: 'value',
+    maxDiscount: 'maxDiscount'
+};
+exports.CouponUsageScalarFieldEnum = {
+    id: 'id',
+    couponId: 'couponId',
+    userId: 'userId',
+    orderId: 'orderId',
+    usedAt: 'usedAt'
 };
 exports.BannerScalarFieldEnum = {
     id: 'id',

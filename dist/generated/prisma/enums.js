@@ -9,7 +9,7 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PaymentStatus = exports.ShopStatus = exports.UserStatus = exports.Role = void 0;
+exports.PaymentStatus = exports.CouponScope = exports.CouponType = exports.DiscountType = exports.ShopStatus = exports.UserStatus = exports.Role = void 0;
 exports.Role = {
     admin: 'admin',
     vendor: 'vendor',
@@ -24,6 +24,20 @@ exports.ShopStatus = {
     ACTIVE: 'ACTIVE',
     INACTIVE: 'INACTIVE',
     PENDING: 'PENDING'
+};
+exports.DiscountType = {
+    PERCENTAGE: 'PERCENTAGE',
+    FIXED: 'FIXED',
+    FREE_SHIPPING: 'FREE_SHIPPING'
+};
+exports.CouponType = {
+    PLATFORM: 'PLATFORM',
+    VENDOR: 'VENDOR'
+};
+exports.CouponScope = {
+    CART: 'CART',
+    PRODUCT: 'PRODUCT',
+    SHIPPING: 'SHIPPING'
 };
 exports.PaymentStatus = {
     PENDING: 'PENDING',

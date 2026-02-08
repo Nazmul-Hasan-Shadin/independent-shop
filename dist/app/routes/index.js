@@ -16,6 +16,7 @@ const payment_route_1 = require("../mdoules/payment/payment.route");
 const banner_route_1 = require("../mdoules/banner/banner.route");
 const payment_route_2 = require("../mdoules/SSLPAYMENT/payment.route");
 const meta_route_1 = require("../mdoules/meta/meta.route");
+const coupon_route_1 = require("../mdoules/coupon/coupon.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -65,6 +66,10 @@ const moduleRoutes = [
     {
         path: '',
         route: meta_route_1.MetaRoutes
+    },
+    {
+        path: '/coupon',
+        route: coupon_route_1.CouponRoutes
     }
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
