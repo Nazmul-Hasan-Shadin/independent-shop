@@ -17,7 +17,7 @@ const initPayment = async (orderInfo: any) => {
 
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
-    ipn_url: "https://independent-shop.vercel.app/payment-gate/ipn",
+    ipn_url: `https://api.rodro.online/api/v1/payment-gate/ipn`,
 
     shipping_method: "Courier",
     product_name: "Computer.",
