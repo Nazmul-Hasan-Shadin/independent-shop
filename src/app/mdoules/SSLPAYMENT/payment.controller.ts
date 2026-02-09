@@ -24,9 +24,11 @@ const validatePayment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const handleIPN = catchAsync(async (req, res) => {
-  console.log("fuckkdjfdkjf");
+  
 
   const { val_id, tran_id, status } = req.body;
+  console.log('ipn',req)
+    console.log('ipn body',req.body)
 
   if (!val_id) {
     res.status(400).json({ message: "val_id missing in IPN" });

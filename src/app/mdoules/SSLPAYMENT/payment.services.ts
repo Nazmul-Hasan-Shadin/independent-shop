@@ -2,13 +2,18 @@ import axios from "axios";
 import config from "../../../config";
 import AppError from "../../error/AppError";
 
+const successUrl =
+  process.env.NODE_ENV === "development"
+    ? process.env.SUCCESS_URL_LOCAL
+    : process.env.SUCCESS_URL;
+
 const initPayment = async (orderInfo: any) => {
   const data = {
     total_amount: Number(orderInfo.price),
     currency: "BDT",
     tran_id: orderInfo.transactionId, // use unique tran_id for each api call
-    success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-    // success_url: `https://44b35636cdbc.ngrok-free.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+    // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+    success_url:`${successUrl}/api/v1/payment-gate/success/${orderInfo.transactionId}`,
 
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
@@ -41,7 +46,7 @@ const initPayment = async (orderInfo: any) => {
   };
 
   const response = await axios.post(
-    "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
+    "https://sandbox.sslcommerz.com/gwprocess/v4/api.php",
     data,
     {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -61,7 +66,7 @@ const validatePayment = async (payload: any) => {
       method: "GET",
       url: `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?wsdl?val_id=${payload.val_id}&store_id=${config.payment.store_id}&store_passwd=${config.payment.store_pass}&format=json`,
     });
-
+    console.log(response,'validate payment response')
     return response.data;
   } catch (error) {
     throw new AppError(500, "payment validation failed");

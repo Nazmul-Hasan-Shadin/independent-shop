@@ -138,7 +138,6 @@ model Order {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   orderItems  OrderItem[]
-
   @@map("orders")
 }
 
