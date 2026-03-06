@@ -40,7 +40,7 @@ const initPayment = async (orderInfo: any) => {
     currency: "BDT",
     tran_id: orderInfo.transactionId, // use unique tran_id for each api call
     // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-    success_url:`${successUrl}/success-payment/TNX`,
+    success_url:`${successUrl}/success-payment`,
 
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
