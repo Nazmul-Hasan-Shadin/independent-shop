@@ -64,7 +64,7 @@ const handleSuccess = catchAsync(async (req: Request, res: Response) => {
   }
    const result= await PaymentServicesSSL.validatePayment2(payload)
    console.log(result,'inside succesurl');
-   if (result.status==='VALID') {
+   if (result.status==='VALIDATED') {
       await prisma.order.update({
         where:{
           transactionId:payload.tran_id
