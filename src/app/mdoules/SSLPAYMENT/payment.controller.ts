@@ -27,34 +27,34 @@ const initPayment = catchAsync(async (req, res, next) => {
 //     data: result,
 //   });
 // });
-const handleIPN = catchAsync(async (req, res) => {
+// const handleIPN = catchAsync(async (req, res) => {
   
-  const { val_id, tran_id, status } = req.body;
-  console.log('ipn',req)
-    console.log('ipn body',req.body)
+//   const { val_id, tran_id, status } = req.body;
+//   console.log('ipn',req)
+//     console.log('ipn body',req.body)
 
-  if (!val_id) {
-    res.status(400).json({ message: "val_id missing in IPN" });
-    return;
-  }
+//   if (!val_id) {
+//     res.status(400).json({ message: "val_id missing in IPN" });
+//     return;
+//   }
 
-  const result = await PaymentServicesSSL.validatePayment2({
-    val_id,
-    tran_id,
-    status,
-  });
+//   const result = await PaymentServicesSSL.validatePayment2({
+//     val_id,
+//     tran_id,
+//     status,
+//   });
 
-  // API response---
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "IPN received & validated",
-    data: result,
-  });
-});
+//   // API response---
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "IPN received & validated",
+//     data: result,
+//   });
+// });
 
 
-const handleSuccess = catchAsync(async (req: Request, res: Response) => {
+const handleIPN = catchAsync(async (req: Request, res: Response) => {
   const payload= req.body;
 
     
@@ -64,7 +64,7 @@ const handleSuccess = catchAsync(async (req: Request, res: Response) => {
   }
    const result= await PaymentServicesSSL.validatePayment2(payload)
    console.log(result,'inside succesurl');
-   if (result.status==='VALIDATED') {
+   if (result.status==='VALID') {
       await prisma.order.update({
         where:{
           transactionId:payload.tran_id
@@ -75,7 +75,8 @@ const handleSuccess = catchAsync(async (req: Request, res: Response) => {
       })
      console.log('iam ahittinnngggkgjkdj');
      
-      res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
+      // res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
+       res.status(200).send("IPN received");
    }
    
 
@@ -86,5 +87,5 @@ export const PaymentControllerSSL = {
   initPayment,
  
   handleIPN,
-  handleSuccess,
+  // handleSuccess,
 };

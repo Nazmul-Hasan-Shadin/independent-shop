@@ -5,8 +5,8 @@ import prisma from "../../../utils/prisma";
 
 const successUrl =
   process.env.NODE_ENV === "development"
-    ? process.env.SUCCESS_URL_LOCAL
-    : process.env.SUCCESS_URL;
+    ? process.env.REDIRECT_URL_LOCAL
+    : process.env.REDIRECT_URL;
 
 const initPayment = async (orderInfo: any) => {
     
@@ -40,7 +40,7 @@ const initPayment = async (orderInfo: any) => {
     currency: "BDT",
     tran_id: orderInfo.transactionId, // use unique tran_id for each api call
     // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-    success_url:`${successUrl}/api/v1/payment-gate/success`,
+    success_url:`${successUrl}/success-payment/TNX`,
 
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
@@ -87,6 +87,9 @@ const initPayment = async (orderInfo: any) => {
 
   };
 };
+
+
+
 const validatePayment2 = async (payload: {
   val_id: string;
   tran_id?: string;
