@@ -9,8 +9,8 @@ const successUrl =
     : process.env.SUCCESS_URL;
 
 const initPayment = async (orderInfo: any) => {
-
-   const totalAmount= orderInfo.orderItems.reduce((initial:number,item:any)=> initial + Number(item.quantity * item.price),0)
+    
+   const totalAmount= orderInfo?.orderItems.reduce((initial:number,item:any)=> initial + Number(item.quantity * item.price),0)
     const createOrderIntoDb= await prisma.order.create({
     data:{
     shopId:orderInfo.shopId,

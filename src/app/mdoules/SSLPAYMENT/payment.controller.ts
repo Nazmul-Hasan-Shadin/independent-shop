@@ -56,7 +56,7 @@ const handleIPN = catchAsync(async (req, res) => {
 
 const handleSuccess = catchAsync(async (req: Request, res: Response) => {
   const payload= req.body;
-    console.log('suceese url page',payload);
+
     
   if (!payload.tran_id) {
     res.status(400).json({ message: "tran_id or val_id missing" });
@@ -73,7 +73,8 @@ const handleSuccess = catchAsync(async (req: Request, res: Response) => {
           status:'COMPLETE'
         }
       })
-
+     console.log('iam ahittinnngggkgjkdj');
+     
       res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
    }
    
