@@ -22,7 +22,7 @@ const AppError_1 = __importDefault(require("../../error/AppError"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendMail_1 = require("../../../utils/sendMail");
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const userData = yield prisma_1.default.user.findUniqueOrThrow({
+    const userData = yield prisma_1.default.user.findUnique({
         where: {
             email: payload.email,
             status: enums_1.UserStatus.ACTIVE,
@@ -33,7 +33,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const isCorrectPassword = yield bcrypt_1.default.compare(payload.password, userData.password);
     if (!isCorrectPassword) {
-        throw new Error("password is incorrecct");
+        throw new AppError_1.default(401, "password is incorrect");
     }
     const accessToken = (0, jwtUtils_1.generateToken)({ email: userData.email, role: userData.role }, config_1.default.jwt.jwt_secret, config_1.default.jwt.expires_in);
     const refreshtoken = (0, jwtUtils_1.generateToken)({ email: userData.email, role: userData.role }, config_1.default.jwt.refreshToken_sec, config_1.default.jwt.refresh_token_expires_in);
@@ -51,7 +51,7 @@ const changePassword = (user, payload) => __awaiter(void 0, void 0, void 0, func
     });
     const isCorrectPassword = yield bcrypt_1.default.compare(payload.oldPassword, userData.password);
     if (!isCorrectPassword) {
-        throw new Error("password is incorrecct");
+        throw new Error("password is incorrect");
     }
     const hashPassword = yield bcrypt_1.default.hash(payload.newPassword, 12);
     yield prisma_1.default.user.update({

@@ -43,7 +43,7 @@ const globalErrorHandler = (
 
     if (err.code === "P2002") {
       statusCode = 409;
-      const field= err.meta?.driverAdapterError?.cause?.constraint?.fields[0] || 'field';
+      const field= (err.meta as any)?.driverAdapterError?.cause?.constraint?.fields[0] || 'field';
       message=`${field} already exist`
       errorDetails = err.meta;
     }

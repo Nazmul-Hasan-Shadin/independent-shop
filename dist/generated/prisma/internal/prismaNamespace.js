@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.BannerScalarFieldEnum = exports.CouponUsageScalarFieldEnum = exports.CouponBenefitScalarFieldEnum = exports.CouponRuleScalarFieldEnum = exports.CouponScalarFieldEnum = exports.ShopFollowerScalarFieldEnum = exports.ReviewScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.ProductViewScalarFieldEnum = exports.ProductScalarFieldEnum = exports.ShopScalarFieldEnum = exports.UserDataScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.BannerScalarFieldEnum = exports.CouponUsageScalarFieldEnum = exports.CouponBenefitScalarFieldEnum = exports.CouponRuleCategoryScalarFieldEnum = exports.CouponRuleProductScalarFieldEnum = exports.CouponRuleScalarFieldEnum = exports.CouponScalarFieldEnum = exports.ShopFollowerScalarFieldEnum = exports.ReviewScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.ProductViewScalarFieldEnum = exports.ProductScalarFieldEnum = exports.ShopScalarFieldEnum = exports.UserDataScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 /**
  * Prisma Errors
@@ -115,6 +115,8 @@ exports.ModelName = {
     ShopFollower: 'ShopFollower',
     Coupon: 'Coupon',
     CouponRule: 'CouponRule',
+    CouponRuleProduct: 'CouponRuleProduct',
+    CouponRuleCategory: 'CouponRuleCategory',
     CouponBenefit: 'CouponBenefit',
     CouponUsage: 'CouponUsage',
     Banner: 'Banner'
@@ -198,6 +200,7 @@ exports.OrderScalarFieldEnum = {
     shopId: 'shopId',
     customerId: 'customerId',
     status: 'status',
+    transactionId: 'transactionId',
     totalAmount: 'totalAmount',
     discountAmount: 'discountAmount',
     appliedCouponCode: 'appliedCouponCode',
@@ -250,9 +253,17 @@ exports.CouponRuleScalarFieldEnum = {
     couponId: 'couponId',
     minPurchase: 'minPurchase',
     minQuantity: 'minQuantity',
-    categoryIds: 'categoryIds',
-    productIds: 'productIds',
     newUserOnly: 'newUserOnly'
+};
+exports.CouponRuleProductScalarFieldEnum = {
+    id: 'id',
+    couponRuleId: 'couponRuleId',
+    productId: 'productId'
+};
+exports.CouponRuleCategoryScalarFieldEnum = {
+    id: 'id',
+    couponRuleId: 'couponRuleId',
+    categoryId: 'categoryId'
 };
 exports.CouponBenefitScalarFieldEnum = {
     id: 'id',

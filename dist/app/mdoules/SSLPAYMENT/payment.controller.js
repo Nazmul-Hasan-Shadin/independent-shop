@@ -16,12 +16,14 @@ exports.PaymentControllerSSL = void 0;
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const payment_services_1 = require("./payment.services");
+const prisma_1 = __importDefault(require("../../../utils/prisma"));
+const productionRedirectUrl = process.env.NODE_ENV === 'development' ? process.env.REDIRECT_URL_LOCAL : process.env.REDIRECT_URL;
 const initPayment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield payment_services_1.PaymentServicesSSL.initPayment(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: "Orders retrieved successfully",
+        message: "payment init successful",
         data: result,
     });
 }));
@@ -56,12 +58,25 @@ const handleIPN = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     });
 }));
 const handleSuccess = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { tran_id } = req.params;
-    if (!tran_id) {
+    const payload = req.body;
+    console.log('suceese url page', payload);
+    if (!payload.tran_id) {
         res.status(400).json({ message: "tran_id or val_id missing" });
         return;
     }
-    res.redirect(`https://independent-mart.vercel.app/success-payment/${tran_id}`);
+    const result = yield payment_services_1.PaymentServicesSSL.validatePayment2(payload);
+    console.log(result, 'inside succesurl');
+    if (result.status === 'VALID') {
+        yield prisma_1.default.order.update({
+            where: {
+                transactionId: payload.tran_id
+            },
+            data: {
+                status: 'COMPLETE'
+            }
+        });
+        res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
+    }
 }));
 exports.PaymentControllerSSL = {
     initPayment,

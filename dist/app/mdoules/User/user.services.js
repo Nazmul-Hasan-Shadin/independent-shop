@@ -15,8 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServices = void 0;
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const AppError_1 = __importDefault(require("../../error/AppError"));
 const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(payload, 'load');
+    if (!payload.email || !payload.password || !payload.username) {
+        throw new AppError_1.default(400, "Required fields are missing");
+    }
     const hashedPassword = yield bcrypt_1.default.hash(payload.password, 12);
     const result = prisma_1.default.user.create({
         data: Object.assign(Object.assign({}, payload), { password: hashedPassword }),

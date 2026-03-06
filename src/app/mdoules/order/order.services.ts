@@ -2,7 +2,7 @@ import { IAuthUser } from "../../../interface/common";
 import prisma from "../../../utils/prisma";
 
 const createOrder = async (payload: any) => {
-  const { shopId, customerId, totalAmount, orderItems, status } = payload;
+  const { shopId, customerId, totalAmount, orderItems, status,transactionId } = payload;
   console.log(shopId, customerId, totalAmount, orderItems,';bola');
 
   // Create the order and associated order items
@@ -12,6 +12,7 @@ const createOrder = async (payload: any) => {
         shop:{
           connect: { id: shopId }, 
         },
+        transactionId,
          customer: {
           connect: { id: customerId },
         },

@@ -19,7 +19,7 @@ const initPayment = async (orderInfo: any) => {
     totalAmount:totalAmount,
     discountAmount:orderInfo?.discountAmount,
     orderItems:{
-      create:orderInfo.orderItems.map((item)=>{
+      create:orderInfo.orderItems.map((item:any)=>{
         console.log(item,'iam item');
         
         return (
