@@ -9,7 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const globalError_1 = __importDefault(require("./middleware/globalError"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ['https://independent-mart.vercel.app', 'http://localhost:3000', 'http://shop.buybarionline.com'],
+    origin: ['https://independent-mart.vercel.app', 'http://localhost:3000', 'https://shop.rodro.online'],
     credentials: true,
 }));
 app.use(express_1.default.json());

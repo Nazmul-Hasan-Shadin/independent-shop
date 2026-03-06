@@ -191,6 +191,7 @@ export type CategoryWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   products?: Prisma.ProductListRelationFilter
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -201,6 +202,7 @@ export type CategoryOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   products?: Prisma.ProductOrderByRelationAggregateInput
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -214,6 +216,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   products?: Prisma.ProductListRelationFilter
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryListRelationFilter
 }, "id" | "name">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -248,6 +251,7 @@ export type CategoryCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -258,6 +262,7 @@ export type CategoryUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -268,6 +273,7 @@ export type CategoryUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -278,6 +284,7 @@ export type CategoryUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -353,6 +360,20 @@ export type CategoryUpdateOneRequiredWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutProductsInput, Prisma.CategoryUpdateWithoutProductsInput>, Prisma.CategoryUncheckedUpdateWithoutProductsInput>
 }
 
+export type CategoryCreateNestedOneWithoutCouponRuleCategoryxInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedCreateWithoutCouponRuleCategoryxInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCouponRuleCategoryxInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneRequiredWithoutCouponRuleCategoryxNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedCreateWithoutCouponRuleCategoryxInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCouponRuleCategoryxInput
+  upsert?: Prisma.CategoryUpsertWithoutCouponRuleCategoryxInput
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutCouponRuleCategoryxInput, Prisma.CategoryUpdateWithoutCouponRuleCategoryxInput>, Prisma.CategoryUncheckedUpdateWithoutCouponRuleCategoryxInput>
+}
+
 export type CategoryCreateWithoutProductsInput = {
   id?: string
   name: string
@@ -360,6 +381,7 @@ export type CategoryCreateWithoutProductsInput = {
   images?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutProductsInput = {
@@ -369,6 +391,7 @@ export type CategoryUncheckedCreateWithoutProductsInput = {
   images?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutProductsInput = {
@@ -394,6 +417,7 @@ export type CategoryUpdateWithoutProductsInput = {
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutProductsInput = {
@@ -403,6 +427,63 @@ export type CategoryUncheckedUpdateWithoutProductsInput = {
   images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  couponRuleCategoryx?: Prisma.CouponRuleCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutCouponRuleCategoryxInput = {
+  id?: string
+  name: string
+  description: string
+  images?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutCouponRuleCategoryxInput = {
+  id?: string
+  name: string
+  description: string
+  images?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutCouponRuleCategoryxInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedCreateWithoutCouponRuleCategoryxInput>
+}
+
+export type CategoryUpsertWithoutCouponRuleCategoryxInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedUpdateWithoutCouponRuleCategoryxInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedCreateWithoutCouponRuleCategoryxInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutCouponRuleCategoryxInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutCouponRuleCategoryxInput, Prisma.CategoryUncheckedUpdateWithoutCouponRuleCategoryxInput>
+}
+
+export type CategoryUpdateWithoutCouponRuleCategoryxInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutCouponRuleCategoryxInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  images?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 
@@ -412,10 +493,12 @@ export type CategoryUncheckedUpdateWithoutProductsInput = {
 
 export type CategoryCountOutputType = {
   products: number
+  couponRuleCategoryx: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | CategoryCountOutputTypeCountProductsArgs
+  couponRuleCategoryx?: boolean | CategoryCountOutputTypeCountCouponRuleCategoryxArgs
 }
 
 /**
@@ -435,6 +518,13 @@ export type CategoryCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ProductWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountCouponRuleCategoryxArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponRuleCategoryWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -444,6 +534,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
+  couponRuleCategoryx?: boolean | Prisma.Category$couponRuleCategoryxArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -477,6 +568,7 @@ export type CategorySelectScalar = {
 export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "images" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
+  couponRuleCategoryx?: boolean | Prisma.Category$couponRuleCategoryxArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -486,6 +578,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Category"
   objects: {
     products: Prisma.$ProductPayload<ExtArgs>[]
+    couponRuleCategoryx: Prisma.$CouponRuleCategoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -889,6 +982,7 @@ readonly fields: CategoryFieldRefs;
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   products<T extends Prisma.Category$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  couponRuleCategoryx<T extends Prisma.Category$couponRuleCategoryxArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$couponRuleCategoryxArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponRuleCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1333,6 +1427,30 @@ export type Category$productsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
+}
+
+/**
+ * Category.couponRuleCategoryx
+ */
+export type Category$couponRuleCategoryxArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponRuleCategory
+   */
+  select?: Prisma.CouponRuleCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CouponRuleCategory
+   */
+  omit?: Prisma.CouponRuleCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponRuleCategoryInclude<ExtArgs> | null
+  where?: Prisma.CouponRuleCategoryWhereInput
+  orderBy?: Prisma.CouponRuleCategoryOrderByWithRelationInput | Prisma.CouponRuleCategoryOrderByWithRelationInput[]
+  cursor?: Prisma.CouponRuleCategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponRuleCategoryScalarFieldEnum | Prisma.CouponRuleCategoryScalarFieldEnum[]
 }
 
 /**

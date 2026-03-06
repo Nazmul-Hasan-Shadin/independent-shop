@@ -15,17 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentServicesSSL = void 0;
 const axios_1 = __importDefault(require("axios"));
 const config_1 = __importDefault(require("../../../config"));
-const AppError_1 = __importDefault(require("../../error/AppError"));
+const successUrl = process.env.NODE_ENV === "development"
+    ? process.env.SUCCESS_URL_LOCAL
+    : process.env.SUCCESS_URL;
 const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const data = {
         total_amount: Number(orderInfo.price),
         currency: "BDT",
         tran_id: orderInfo.transactionId, // use unique tran_id for each api call
-        success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-        // success_url: `https://44b35636cdbc.ngrok-free.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+        // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
+        success_url: `${successUrl}/success-payment/${orderInfo.transactionId}`,
         fail_url: "http://localhost:3030/fail",
         cancel_url: "http://localhost:3030/cancel",
-        ipn_url: "https://independent-shop.vercel.app/payment-gate/ipn",
+        ipn_url: `https://api.rodro.online/api/v1/payment-gate/ipn`,
         shipping_method: "Courier",
         product_name: "Computer.",
         product_profile: "general",
@@ -49,26 +51,26 @@ const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* (
         store_id: config_1.default.payment.store_id,
         store_passwd: config_1.default.payment.store_pass,
     };
-    const response = yield axios_1.default.post("https://sandbox.sslcommerz.com/gwprocess/v3/api.php", data, {
+    const response = yield axios_1.default.post("https://sandbox.sslcommerz.com/gwprocess/v4/api.php", data, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
     return {
         paymentUrl: response.data.GatewayPageURL,
     };
 });
-const validatePayment = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("iam called", payload);
-    try {
-        const response = yield (0, axios_1.default)({
-            method: "GET",
-            url: `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?wsdl?val_id=${payload.val_id}&store_id=${config_1.default.payment.store_id}&store_passwd=${config_1.default.payment.store_pass}&format=json`,
-        });
-        return response.data;
-    }
-    catch (error) {
-        throw new AppError_1.default(500, "payment validation failed");
-    }
-});
+// const validatePayment = async (payload: any) => {
+//   console.log("iam called", payload);
+//   try {
+//     const response = await axios({
+//       method: "GET",
+//       url: `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?wsdl?val_id=${payload.val_id}&store_id=${config.payment.store_id}&store_passwd=${config.payment.store_pass}&format=json`,
+//     });
+//     console.log(response,'validate payment response')
+//     return response.data;
+//   } catch (error) {
+//     throw new AppError(500, "payment validation failed");
+//   }
+// };
 const validatePayment2 = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { val_id } = payload;
@@ -82,6 +84,6 @@ const validatePayment2 = (payload) => __awaiter(void 0, void 0, void 0, function
 });
 exports.PaymentServicesSSL = {
     initPayment,
-    validatePayment,
+    // validatePayment,
     validatePayment2,
 };

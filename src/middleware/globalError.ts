@@ -43,13 +43,18 @@ const globalErrorHandler = (
 
     if (err.code === "P2002") {
       statusCode = 409;
-      message = "Duplicate field error";
+      const field= err.meta?.driverAdapterError?.cause?.constraint?.fields[0] || 'field';
+      message=`${field} already exist`
       errorDetails = err.meta;
     }
   }
 
 
-  const safeError = sanitizeError(err);
+const safeError = sanitizeError({
+  ...err,
+  message,
+  errorDetails,
+});
 
 
   res.status(statusCode).json({

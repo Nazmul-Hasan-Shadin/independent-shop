@@ -8,7 +8,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { sendEmail } from "../../../utils/sendMail";
 
 const loginUser = async (payload: { email: string; password: string }) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  const userData = await prisma.user.findUnique({
     where: {
       email: payload.email,
       status: UserStatus.ACTIVE,
@@ -24,7 +24,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
   );
 
   if (!isCorrectPassword) {
-    throw new Error("password is incorrecct");
+    throw new AppError(401,"password is incorrect");
   }
 
   const accessToken = generateToken(
@@ -59,7 +59,7 @@ const changePassword = async (user: any, payload: any) => {
   );
 
   if (!isCorrectPassword) {
-    throw new Error("password is incorrecct");
+    throw new Error("password is incorrect");
   }
 
   const hashPassword: string = await bcrypt.hash(payload.newPassword, 12);

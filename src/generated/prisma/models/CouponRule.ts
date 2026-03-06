@@ -57,8 +57,6 @@ export type CouponRuleCountAggregateOutputType = {
   couponId: number
   minPurchase: number
   minQuantity: number
-  categoryIds: number
-  productIds: number
   newUserOnly: number
   _all: number
 }
@@ -95,8 +93,6 @@ export type CouponRuleCountAggregateInputType = {
   couponId?: true
   minPurchase?: true
   minQuantity?: true
-  categoryIds?: true
-  productIds?: true
   newUserOnly?: true
   _all?: true
 }
@@ -192,8 +188,6 @@ export type CouponRuleGroupByOutputType = {
   couponId: string
   minPurchase: number | null
   minQuantity: number | null
-  categoryIds: string[]
-  productIds: string[]
   newUserOnly: boolean | null
   _count: CouponRuleCountAggregateOutputType | null
   _avg: CouponRuleAvgAggregateOutputType | null
@@ -225,10 +219,10 @@ export type CouponRuleWhereInput = {
   couponId?: Prisma.StringFilter<"CouponRule"> | string
   minPurchase?: Prisma.FloatNullableFilter<"CouponRule"> | number | null
   minQuantity?: Prisma.IntNullableFilter<"CouponRule"> | number | null
-  categoryIds?: Prisma.StringNullableListFilter<"CouponRule">
-  productIds?: Prisma.StringNullableListFilter<"CouponRule">
   newUserOnly?: Prisma.BoolNullableFilter<"CouponRule"> | boolean | null
   coupon?: Prisma.XOR<Prisma.CouponScalarRelationFilter, Prisma.CouponWhereInput>
+  couponRuleProduct?: Prisma.CouponRuleProductListRelationFilter
+  couponRuleCategory?: Prisma.CouponRuleCategoryListRelationFilter
 }
 
 export type CouponRuleOrderByWithRelationInput = {
@@ -236,10 +230,10 @@ export type CouponRuleOrderByWithRelationInput = {
   couponId?: Prisma.SortOrder
   minPurchase?: Prisma.SortOrderInput | Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryIds?: Prisma.SortOrder
-  productIds?: Prisma.SortOrder
   newUserOnly?: Prisma.SortOrderInput | Prisma.SortOrder
   coupon?: Prisma.CouponOrderByWithRelationInput
+  couponRuleProduct?: Prisma.CouponRuleProductOrderByRelationAggregateInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryOrderByRelationAggregateInput
 }
 
 export type CouponRuleWhereUniqueInput = Prisma.AtLeast<{
@@ -250,10 +244,10 @@ export type CouponRuleWhereUniqueInput = Prisma.AtLeast<{
   couponId?: Prisma.StringFilter<"CouponRule"> | string
   minPurchase?: Prisma.FloatNullableFilter<"CouponRule"> | number | null
   minQuantity?: Prisma.IntNullableFilter<"CouponRule"> | number | null
-  categoryIds?: Prisma.StringNullableListFilter<"CouponRule">
-  productIds?: Prisma.StringNullableListFilter<"CouponRule">
   newUserOnly?: Prisma.BoolNullableFilter<"CouponRule"> | boolean | null
   coupon?: Prisma.XOR<Prisma.CouponScalarRelationFilter, Prisma.CouponWhereInput>
+  couponRuleProduct?: Prisma.CouponRuleProductListRelationFilter
+  couponRuleCategory?: Prisma.CouponRuleCategoryListRelationFilter
 }, "id">
 
 export type CouponRuleOrderByWithAggregationInput = {
@@ -261,8 +255,6 @@ export type CouponRuleOrderByWithAggregationInput = {
   couponId?: Prisma.SortOrder
   minPurchase?: Prisma.SortOrderInput | Prisma.SortOrder
   minQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryIds?: Prisma.SortOrder
-  productIds?: Prisma.SortOrder
   newUserOnly?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CouponRuleCountOrderByAggregateInput
   _avg?: Prisma.CouponRuleAvgOrderByAggregateInput
@@ -279,8 +271,6 @@ export type CouponRuleScalarWhereWithAggregatesInput = {
   couponId?: Prisma.StringWithAggregatesFilter<"CouponRule"> | string
   minPurchase?: Prisma.FloatNullableWithAggregatesFilter<"CouponRule"> | number | null
   minQuantity?: Prisma.IntNullableWithAggregatesFilter<"CouponRule"> | number | null
-  categoryIds?: Prisma.StringNullableListFilter<"CouponRule">
-  productIds?: Prisma.StringNullableListFilter<"CouponRule">
   newUserOnly?: Prisma.BoolNullableWithAggregatesFilter<"CouponRule"> | boolean | null
 }
 
@@ -288,10 +278,10 @@ export type CouponRuleCreateInput = {
   id?: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
   coupon: Prisma.CouponCreateNestedOneWithoutRulesInput
+  couponRuleProduct?: Prisma.CouponRuleProductCreateNestedManyWithoutCouponRuleInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryCreateNestedManyWithoutCouponRuleInput
 }
 
 export type CouponRuleUncheckedCreateInput = {
@@ -299,19 +289,19 @@ export type CouponRuleUncheckedCreateInput = {
   couponId: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedCreateNestedManyWithoutCouponRuleInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedCreateNestedManyWithoutCouponRuleInput
 }
 
 export type CouponRuleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   coupon?: Prisma.CouponUpdateOneRequiredWithoutRulesNestedInput
+  couponRuleProduct?: Prisma.CouponRuleProductUpdateManyWithoutCouponRuleNestedInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUpdateManyWithoutCouponRuleNestedInput
 }
 
 export type CouponRuleUncheckedUpdateInput = {
@@ -319,9 +309,9 @@ export type CouponRuleUncheckedUpdateInput = {
   couponId?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedUpdateManyWithoutCouponRuleNestedInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedUpdateManyWithoutCouponRuleNestedInput
 }
 
 export type CouponRuleCreateManyInput = {
@@ -329,8 +319,6 @@ export type CouponRuleCreateManyInput = {
   couponId: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
 }
 
@@ -338,8 +326,6 @@ export type CouponRuleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
@@ -348,8 +334,6 @@ export type CouponRuleUncheckedUpdateManyInput = {
   couponId?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
@@ -368,8 +352,6 @@ export type CouponRuleCountOrderByAggregateInput = {
   couponId?: Prisma.SortOrder
   minPurchase?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrder
-  categoryIds?: Prisma.SortOrder
-  productIds?: Prisma.SortOrder
   newUserOnly?: Prisma.SortOrder
 }
 
@@ -397,6 +379,11 @@ export type CouponRuleMinOrderByAggregateInput = {
 export type CouponRuleSumOrderByAggregateInput = {
   minPurchase?: Prisma.SortOrder
   minQuantity?: Prisma.SortOrder
+}
+
+export type CouponRuleScalarRelationFilter = {
+  is?: Prisma.CouponRuleWhereInput
+  isNot?: Prisma.CouponRuleWhereInput
 }
 
 export type CouponRuleCreateNestedManyWithoutCouponInput = {
@@ -441,14 +428,6 @@ export type CouponRuleUncheckedUpdateManyWithoutCouponNestedInput = {
   deleteMany?: Prisma.CouponRuleScalarWhereInput | Prisma.CouponRuleScalarWhereInput[]
 }
 
-export type CouponRuleCreatecategoryIdsInput = {
-  set: string[]
-}
-
-export type CouponRuleCreateproductIdsInput = {
-  set: string[]
-}
-
 export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -457,32 +436,50 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type CouponRuleUpdatecategoryIdsInput = {
-  set?: string[]
-  push?: string | string[]
+export type CouponRuleCreateNestedOneWithoutCouponRuleProductInput = {
+  create?: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleProductInput>
+  connectOrCreate?: Prisma.CouponRuleCreateOrConnectWithoutCouponRuleProductInput
+  connect?: Prisma.CouponRuleWhereUniqueInput
 }
 
-export type CouponRuleUpdateproductIdsInput = {
-  set?: string[]
-  push?: string | string[]
+export type CouponRuleUpdateOneRequiredWithoutCouponRuleProductNestedInput = {
+  create?: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleProductInput>
+  connectOrCreate?: Prisma.CouponRuleCreateOrConnectWithoutCouponRuleProductInput
+  upsert?: Prisma.CouponRuleUpsertWithoutCouponRuleProductInput
+  connect?: Prisma.CouponRuleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CouponRuleUpdateToOneWithWhereWithoutCouponRuleProductInput, Prisma.CouponRuleUpdateWithoutCouponRuleProductInput>, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleProductInput>
+}
+
+export type CouponRuleCreateNestedOneWithoutCouponRuleCategoryInput = {
+  create?: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleCategoryInput>
+  connectOrCreate?: Prisma.CouponRuleCreateOrConnectWithoutCouponRuleCategoryInput
+  connect?: Prisma.CouponRuleWhereUniqueInput
+}
+
+export type CouponRuleUpdateOneRequiredWithoutCouponRuleCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleCategoryInput>
+  connectOrCreate?: Prisma.CouponRuleCreateOrConnectWithoutCouponRuleCategoryInput
+  upsert?: Prisma.CouponRuleUpsertWithoutCouponRuleCategoryInput
+  connect?: Prisma.CouponRuleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CouponRuleUpdateToOneWithWhereWithoutCouponRuleCategoryInput, Prisma.CouponRuleUpdateWithoutCouponRuleCategoryInput>, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleCategoryInput>
 }
 
 export type CouponRuleCreateWithoutCouponInput = {
   id?: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductCreateNestedManyWithoutCouponRuleInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryCreateNestedManyWithoutCouponRuleInput
 }
 
 export type CouponRuleUncheckedCreateWithoutCouponInput = {
   id?: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedCreateNestedManyWithoutCouponRuleInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedCreateNestedManyWithoutCouponRuleInput
 }
 
 export type CouponRuleCreateOrConnectWithoutCouponInput = {
@@ -519,17 +516,117 @@ export type CouponRuleScalarWhereInput = {
   couponId?: Prisma.StringFilter<"CouponRule"> | string
   minPurchase?: Prisma.FloatNullableFilter<"CouponRule"> | number | null
   minQuantity?: Prisma.IntNullableFilter<"CouponRule"> | number | null
-  categoryIds?: Prisma.StringNullableListFilter<"CouponRule">
-  productIds?: Prisma.StringNullableListFilter<"CouponRule">
   newUserOnly?: Prisma.BoolNullableFilter<"CouponRule"> | boolean | null
+}
+
+export type CouponRuleCreateWithoutCouponRuleProductInput = {
+  id?: string
+  minPurchase?: number | null
+  minQuantity?: number | null
+  newUserOnly?: boolean | null
+  coupon: Prisma.CouponCreateNestedOneWithoutRulesInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryCreateNestedManyWithoutCouponRuleInput
+}
+
+export type CouponRuleUncheckedCreateWithoutCouponRuleProductInput = {
+  id?: string
+  couponId: string
+  minPurchase?: number | null
+  minQuantity?: number | null
+  newUserOnly?: boolean | null
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedCreateNestedManyWithoutCouponRuleInput
+}
+
+export type CouponRuleCreateOrConnectWithoutCouponRuleProductInput = {
+  where: Prisma.CouponRuleWhereUniqueInput
+  create: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleProductInput>
+}
+
+export type CouponRuleUpsertWithoutCouponRuleProductInput = {
+  update: Prisma.XOR<Prisma.CouponRuleUpdateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleProductInput>
+  create: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleProductInput>
+  where?: Prisma.CouponRuleWhereInput
+}
+
+export type CouponRuleUpdateToOneWithWhereWithoutCouponRuleProductInput = {
+  where?: Prisma.CouponRuleWhereInput
+  data: Prisma.XOR<Prisma.CouponRuleUpdateWithoutCouponRuleProductInput, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleProductInput>
+}
+
+export type CouponRuleUpdateWithoutCouponRuleProductInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  coupon?: Prisma.CouponUpdateOneRequiredWithoutRulesNestedInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUpdateManyWithoutCouponRuleNestedInput
+}
+
+export type CouponRuleUncheckedUpdateWithoutCouponRuleProductInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  couponId?: Prisma.StringFieldUpdateOperationsInput | string
+  minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedUpdateManyWithoutCouponRuleNestedInput
+}
+
+export type CouponRuleCreateWithoutCouponRuleCategoryInput = {
+  id?: string
+  minPurchase?: number | null
+  minQuantity?: number | null
+  newUserOnly?: boolean | null
+  coupon: Prisma.CouponCreateNestedOneWithoutRulesInput
+  couponRuleProduct?: Prisma.CouponRuleProductCreateNestedManyWithoutCouponRuleInput
+}
+
+export type CouponRuleUncheckedCreateWithoutCouponRuleCategoryInput = {
+  id?: string
+  couponId: string
+  minPurchase?: number | null
+  minQuantity?: number | null
+  newUserOnly?: boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedCreateNestedManyWithoutCouponRuleInput
+}
+
+export type CouponRuleCreateOrConnectWithoutCouponRuleCategoryInput = {
+  where: Prisma.CouponRuleWhereUniqueInput
+  create: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleCategoryInput>
+}
+
+export type CouponRuleUpsertWithoutCouponRuleCategoryInput = {
+  update: Prisma.XOR<Prisma.CouponRuleUpdateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleCategoryInput>
+  create: Prisma.XOR<Prisma.CouponRuleCreateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedCreateWithoutCouponRuleCategoryInput>
+  where?: Prisma.CouponRuleWhereInput
+}
+
+export type CouponRuleUpdateToOneWithWhereWithoutCouponRuleCategoryInput = {
+  where?: Prisma.CouponRuleWhereInput
+  data: Prisma.XOR<Prisma.CouponRuleUpdateWithoutCouponRuleCategoryInput, Prisma.CouponRuleUncheckedUpdateWithoutCouponRuleCategoryInput>
+}
+
+export type CouponRuleUpdateWithoutCouponRuleCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  coupon?: Prisma.CouponUpdateOneRequiredWithoutRulesNestedInput
+  couponRuleProduct?: Prisma.CouponRuleProductUpdateManyWithoutCouponRuleNestedInput
+}
+
+export type CouponRuleUncheckedUpdateWithoutCouponRuleCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  couponId?: Prisma.StringFieldUpdateOperationsInput | string
+  minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedUpdateManyWithoutCouponRuleNestedInput
 }
 
 export type CouponRuleCreateManyCouponInput = {
   id?: string
   minPurchase?: number | null
   minQuantity?: number | null
-  categoryIds?: Prisma.CouponRuleCreatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleCreateproductIdsInput | string[]
   newUserOnly?: boolean | null
 }
 
@@ -537,29 +634,65 @@ export type CouponRuleUpdateWithoutCouponInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUpdateManyWithoutCouponRuleNestedInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUpdateManyWithoutCouponRuleNestedInput
 }
 
 export type CouponRuleUncheckedUpdateWithoutCouponInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  couponRuleProduct?: Prisma.CouponRuleProductUncheckedUpdateManyWithoutCouponRuleNestedInput
+  couponRuleCategory?: Prisma.CouponRuleCategoryUncheckedUpdateManyWithoutCouponRuleNestedInput
 }
 
 export type CouponRuleUncheckedUpdateManyWithoutCouponInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minPurchase?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   minQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  categoryIds?: Prisma.CouponRuleUpdatecategoryIdsInput | string[]
-  productIds?: Prisma.CouponRuleUpdateproductIdsInput | string[]
   newUserOnly?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
+
+/**
+ * Count Type CouponRuleCountOutputType
+ */
+
+export type CouponRuleCountOutputType = {
+  couponRuleProduct: number
+  couponRuleCategory: number
+}
+
+export type CouponRuleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  couponRuleProduct?: boolean | CouponRuleCountOutputTypeCountCouponRuleProductArgs
+  couponRuleCategory?: boolean | CouponRuleCountOutputTypeCountCouponRuleCategoryArgs
+}
+
+/**
+ * CouponRuleCountOutputType without action
+ */
+export type CouponRuleCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponRuleCountOutputType
+   */
+  select?: Prisma.CouponRuleCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CouponRuleCountOutputType without action
+ */
+export type CouponRuleCountOutputTypeCountCouponRuleProductArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponRuleProductWhereInput
+}
+
+/**
+ * CouponRuleCountOutputType without action
+ */
+export type CouponRuleCountOutputTypeCountCouponRuleCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponRuleCategoryWhereInput
+}
 
 
 export type CouponRuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -567,10 +700,11 @@ export type CouponRuleSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   couponId?: boolean
   minPurchase?: boolean
   minQuantity?: boolean
-  categoryIds?: boolean
-  productIds?: boolean
   newUserOnly?: boolean
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
+  couponRuleProduct?: boolean | Prisma.CouponRule$couponRuleProductArgs<ExtArgs>
+  couponRuleCategory?: boolean | Prisma.CouponRule$couponRuleCategoryArgs<ExtArgs>
+  _count?: boolean | Prisma.CouponRuleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["couponRule"]>
 
 export type CouponRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -578,8 +712,6 @@ export type CouponRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   couponId?: boolean
   minPurchase?: boolean
   minQuantity?: boolean
-  categoryIds?: boolean
-  productIds?: boolean
   newUserOnly?: boolean
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["couponRule"]>
@@ -589,8 +721,6 @@ export type CouponRuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   couponId?: boolean
   minPurchase?: boolean
   minQuantity?: boolean
-  categoryIds?: boolean
-  productIds?: boolean
   newUserOnly?: boolean
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["couponRule"]>
@@ -600,14 +730,15 @@ export type CouponRuleSelectScalar = {
   couponId?: boolean
   minPurchase?: boolean
   minQuantity?: boolean
-  categoryIds?: boolean
-  productIds?: boolean
   newUserOnly?: boolean
 }
 
-export type CouponRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "couponId" | "minPurchase" | "minQuantity" | "categoryIds" | "productIds" | "newUserOnly", ExtArgs["result"]["couponRule"]>
+export type CouponRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "couponId" | "minPurchase" | "minQuantity" | "newUserOnly", ExtArgs["result"]["couponRule"]>
 export type CouponRuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
+  couponRuleProduct?: boolean | Prisma.CouponRule$couponRuleProductArgs<ExtArgs>
+  couponRuleCategory?: boolean | Prisma.CouponRule$couponRuleCategoryArgs<ExtArgs>
+  _count?: boolean | Prisma.CouponRuleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CouponRuleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
@@ -620,14 +751,14 @@ export type $CouponRulePayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "CouponRule"
   objects: {
     coupon: Prisma.$CouponPayload<ExtArgs>
+    couponRuleProduct: Prisma.$CouponRuleProductPayload<ExtArgs>[]
+    couponRuleCategory: Prisma.$CouponRuleCategoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     couponId: string
     minPurchase: number | null
     minQuantity: number | null
-    categoryIds: string[]
-    productIds: string[]
     newUserOnly: boolean | null
   }, ExtArgs["result"]["couponRule"]>
   composites: {}
@@ -1024,6 +1155,8 @@ readonly fields: CouponRuleFieldRefs;
 export interface Prisma__CouponRuleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   coupon<T extends Prisma.CouponDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CouponDefaultArgs<ExtArgs>>): Prisma.Prisma__CouponClient<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  couponRuleProduct<T extends Prisma.CouponRule$couponRuleProductArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CouponRule$couponRuleProductArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponRuleProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  couponRuleCategory<T extends Prisma.CouponRule$couponRuleCategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CouponRule$couponRuleCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponRuleCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1057,8 +1190,6 @@ export interface CouponRuleFieldRefs {
   readonly couponId: Prisma.FieldRef<"CouponRule", 'String'>
   readonly minPurchase: Prisma.FieldRef<"CouponRule", 'Float'>
   readonly minQuantity: Prisma.FieldRef<"CouponRule", 'Int'>
-  readonly categoryIds: Prisma.FieldRef<"CouponRule", 'String[]'>
-  readonly productIds: Prisma.FieldRef<"CouponRule", 'String[]'>
   readonly newUserOnly: Prisma.FieldRef<"CouponRule", 'Boolean'>
 }
     
@@ -1453,6 +1584,54 @@ export type CouponRuleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many CouponRules to delete.
    */
   limit?: number
+}
+
+/**
+ * CouponRule.couponRuleProduct
+ */
+export type CouponRule$couponRuleProductArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponRuleProduct
+   */
+  select?: Prisma.CouponRuleProductSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CouponRuleProduct
+   */
+  omit?: Prisma.CouponRuleProductOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponRuleProductInclude<ExtArgs> | null
+  where?: Prisma.CouponRuleProductWhereInput
+  orderBy?: Prisma.CouponRuleProductOrderByWithRelationInput | Prisma.CouponRuleProductOrderByWithRelationInput[]
+  cursor?: Prisma.CouponRuleProductWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponRuleProductScalarFieldEnum | Prisma.CouponRuleProductScalarFieldEnum[]
+}
+
+/**
+ * CouponRule.couponRuleCategory
+ */
+export type CouponRule$couponRuleCategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponRuleCategory
+   */
+  select?: Prisma.CouponRuleCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CouponRuleCategory
+   */
+  omit?: Prisma.CouponRuleCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponRuleCategoryInclude<ExtArgs> | null
+  where?: Prisma.CouponRuleCategoryWhereInput
+  orderBy?: Prisma.CouponRuleCategoryOrderByWithRelationInput | Prisma.CouponRuleCategoryOrderByWithRelationInput[]
+  cursor?: Prisma.CouponRuleCategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponRuleCategoryScalarFieldEnum | Prisma.CouponRuleCategoryScalarFieldEnum[]
 }
 
 /**

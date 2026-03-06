@@ -114,6 +114,7 @@ CREATE TABLE "orders" (
     "shopId" TEXT NOT NULL,
     "customerId" TEXT NOT NULL,
     "status" "PaymentStatus" NOT NULL DEFAULT 'PENDING',
+    "transactionId" TEXT NOT NULL,
     "totalAmount" DOUBLE PRECISION NOT NULL,
     "discountAmount" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "appliedCouponCode" TEXT,
@@ -184,11 +185,27 @@ CREATE TABLE "CouponRule" (
     "couponId" TEXT NOT NULL,
     "minPurchase" DOUBLE PRECISION,
     "minQuantity" INTEGER,
-    "categoryIds" TEXT[],
-    "productIds" TEXT[],
     "newUserOnly" BOOLEAN,
 
     CONSTRAINT "CouponRule_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CouponRuleProduct" (
+    "id" TEXT NOT NULL,
+    "couponRuleId" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
+
+    CONSTRAINT "CouponRuleProduct_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CouponRuleCategory" (
+    "id" TEXT NOT NULL,
+    "couponRuleId" TEXT NOT NULL,
+    "categoryId" TEXT NOT NULL,
+
+    CONSTRAINT "CouponRuleCategory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -252,6 +269,9 @@ CREATE UNIQUE INDEX "ProductView_productId_userId_key" ON "ProductView"("product
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "orders_transactionId_key" ON "orders"("transactionId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Review_productId_userId_key" ON "Review"("productId", "userId");
 
 -- CreateIndex
@@ -267,13 +287,19 @@ CREATE INDEX "Coupon_code_idx" ON "Coupon"("code");
 CREATE INDEX "Coupon_startDate_endDate_idx" ON "Coupon"("startDate", "endDate");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "CouponRuleProduct_couponRuleId_productId_key" ON "CouponRuleProduct"("couponRuleId", "productId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "CouponRuleCategory_couponRuleId_categoryId_key" ON "CouponRuleCategory"("couponRuleId", "categoryId");
+
+-- CreateIndex
 CREATE INDEX "CouponUsage_couponId_idx" ON "CouponUsage"("couponId");
 
 -- CreateIndex
 CREATE INDEX "CouponUsage_userId_idx" ON "CouponUsage"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "CouponUsage_couponId_userId_orderId_key" ON "CouponUsage"("couponId", "userId", "orderId");
+CREATE UNIQUE INDEX "CouponUsage_couponId_userId_key" ON "CouponUsage"("couponId", "userId");
 
 -- AddForeignKey
 ALTER TABLE "UserData" ADD CONSTRAINT "UserData_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -322,6 +348,18 @@ ALTER TABLE "Coupon" ADD CONSTRAINT "Coupon_vendorId_fkey" FOREIGN KEY ("vendorI
 
 -- AddForeignKey
 ALTER TABLE "CouponRule" ADD CONSTRAINT "CouponRule_couponId_fkey" FOREIGN KEY ("couponId") REFERENCES "Coupon"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CouponRuleProduct" ADD CONSTRAINT "CouponRuleProduct_couponRuleId_fkey" FOREIGN KEY ("couponRuleId") REFERENCES "CouponRule"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CouponRuleProduct" ADD CONSTRAINT "CouponRuleProduct_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CouponRuleCategory" ADD CONSTRAINT "CouponRuleCategory_couponRuleId_fkey" FOREIGN KEY ("couponRuleId") REFERENCES "CouponRule"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CouponRuleCategory" ADD CONSTRAINT "CouponRuleCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CouponBenefit" ADD CONSTRAINT "CouponBenefit_couponId_fkey" FOREIGN KEY ("couponId") REFERENCES "Coupon"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

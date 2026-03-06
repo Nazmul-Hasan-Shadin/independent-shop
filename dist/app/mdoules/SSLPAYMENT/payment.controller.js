@@ -25,18 +25,19 @@ const initPayment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
         data: result,
     });
 }));
-const validatePayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield payment_services_1.PaymentServicesSSL.validatePayment(req.query);
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: "Payment validation successful",
-        data: result,
-    });
-}));
+// const validatePayment = catchAsync(async (req: Request, res: Response) => {
+//   const result = await PaymentServicesSSL.validatePayment(req.query);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "Payment validation successful",
+//     data: result,
+//   });
+// });
 const handleIPN = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("fuckkdjfdkjf");
     const { val_id, tran_id, status } = req.body;
+    console.log('ipn', req);
+    console.log('ipn body', req.body);
     if (!val_id) {
         res.status(400).json({ message: "val_id missing in IPN" });
         return;
@@ -64,7 +65,6 @@ const handleSuccess = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 exports.PaymentControllerSSL = {
     initPayment,
-    validatePayment,
     handleIPN,
     handleSuccess,
 };

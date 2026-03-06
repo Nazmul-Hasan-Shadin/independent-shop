@@ -63,6 +63,8 @@ export const ModelName = {
   ShopFollower: 'ShopFollower',
   Coupon: 'Coupon',
   CouponRule: 'CouponRule',
+  CouponRuleProduct: 'CouponRuleProduct',
+  CouponRuleCategory: 'CouponRuleCategory',
   CouponBenefit: 'CouponBenefit',
   CouponUsage: 'CouponUsage',
   Banner: 'Banner'
@@ -178,6 +180,7 @@ export const OrderScalarFieldEnum = {
   shopId: 'shopId',
   customerId: 'customerId',
   status: 'status',
+  transactionId: 'transactionId',
   totalAmount: 'totalAmount',
   discountAmount: 'discountAmount',
   appliedCouponCode: 'appliedCouponCode',
@@ -250,12 +253,28 @@ export const CouponRuleScalarFieldEnum = {
   couponId: 'couponId',
   minPurchase: 'minPurchase',
   minQuantity: 'minQuantity',
-  categoryIds: 'categoryIds',
-  productIds: 'productIds',
   newUserOnly: 'newUserOnly'
 } as const
 
 export type CouponRuleScalarFieldEnum = (typeof CouponRuleScalarFieldEnum)[keyof typeof CouponRuleScalarFieldEnum]
+
+
+export const CouponRuleProductScalarFieldEnum = {
+  id: 'id',
+  couponRuleId: 'couponRuleId',
+  productId: 'productId'
+} as const
+
+export type CouponRuleProductScalarFieldEnum = (typeof CouponRuleProductScalarFieldEnum)[keyof typeof CouponRuleProductScalarFieldEnum]
+
+
+export const CouponRuleCategoryScalarFieldEnum = {
+  id: 'id',
+  couponRuleId: 'couponRuleId',
+  categoryId: 'categoryId'
+} as const
+
+export type CouponRuleCategoryScalarFieldEnum = (typeof CouponRuleCategoryScalarFieldEnum)[keyof typeof CouponRuleCategoryScalarFieldEnum]
 
 
 export const CouponBenefitScalarFieldEnum = {

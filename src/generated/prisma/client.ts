@@ -98,6 +98,16 @@ export type Coupon = Prisma.CouponModel
  */
 export type CouponRule = Prisma.CouponRuleModel
 /**
+ * Model CouponRuleProduct
+ * 
+ */
+export type CouponRuleProduct = Prisma.CouponRuleProductModel
+/**
+ * Model CouponRuleCategory
+ * 
+ */
+export type CouponRuleCategory = Prisma.CouponRuleCategoryModel
+/**
  * Model CouponBenefit
  * 
  */

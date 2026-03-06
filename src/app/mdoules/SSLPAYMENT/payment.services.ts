@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "../../../config";
 import AppError from "../../error/AppError";
+import prisma from "../../../utils/prisma";
 
 const successUrl =
   process.env.NODE_ENV === "development"
@@ -8,12 +9,38 @@ const successUrl =
     : process.env.SUCCESS_URL;
 
 const initPayment = async (orderInfo: any) => {
+
+   const totalAmount= orderInfo.orderItems.reduce((initial:number,item:any)=> initial + Number(item.quantity * item.price),0)
+    const createOrderIntoDb= await prisma.order.create({
+    data:{
+    shopId:orderInfo.shopId,
+    customerId:orderInfo?.customerId,
+    transactionId:orderInfo.transactionId,
+    totalAmount:totalAmount,
+    discountAmount:orderInfo?.discountAmount,
+    orderItems:{
+      create:orderInfo.orderItems.map((item)=>{
+        console.log(item,'iam item');
+        
+        return (
+          {
+        productId:item.id,
+        price:Number(item.quantity) * Number(item.price),
+        quantity:item?.quantity
+      }
+        )
+      })
+    }
+
+    }
+  })
+
   const data = {
-    total_amount: Number(orderInfo.price),
+    total_amount: Number(totalAmount),
     currency: "BDT",
     tran_id: orderInfo.transactionId, // use unique tran_id for each api call
     // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-    success_url:`${successUrl}/success-payment/${orderInfo.transactionId}`,
+    success_url:`${successUrl}/api/v1/payment-gate/success`,
 
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
@@ -44,6 +71,8 @@ const initPayment = async (orderInfo: any) => {
 
     store_passwd: config.payment.store_pass,
   };
+ 
+
 
   const response = await axios.post(
     "https://sandbox.sslcommerz.com/gwprocess/v4/api.php",
@@ -55,36 +84,26 @@ const initPayment = async (orderInfo: any) => {
 
   return {
     paymentUrl: response.data.GatewayPageURL,
+
   };
 };
-
-const validatePayment = async (payload: any) => {
-  console.log("iam called", payload);
-
-  try {
-    const response = await axios({
-      method: "GET",
-      url: `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?wsdl?val_id=${payload.val_id}&store_id=${config.payment.store_id}&store_passwd=${config.payment.store_pass}&format=json`,
-    });
-    console.log(response,'validate payment response')
-    return response.data;
-  } catch (error) {
-    throw new AppError(500, "payment validation failed");
-  }
-};
-
 const validatePayment2 = async (payload: {
   val_id: string;
   tran_id?: string;
   status?: string;
 }) => {
   try {
-    const { val_id } = payload;
-    payload;
+    const { val_id ,tran_id} = payload;
+    if (val_id && tran_id) {
+       prisma.order.update
+    }
 
     const response = await axios.get(
       `https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?val_id=${val_id}&store_id=${config.payment.store_id}&store_passwd=${config.payment.store_pass}&v=1&format=json`
     );
+
+    // console.log(response,'of ipn');
+    
     return response.data;
   } catch (error: any) {
     throw new Error(error?.message || "Payment validation failed");
@@ -92,6 +111,6 @@ const validatePayment2 = async (payload: {
 };
 export const PaymentServicesSSL = {
   initPayment,
-  validatePayment,
+  // validatePayment,
   validatePayment2,
 };

@@ -86,7 +86,7 @@ model Product {
   category       Category      @relation(fields: [categoryId], references: [id])
   review         Review[]
   OrderItems     OrderItem[]
-  CouponRule CouponRule[]
+  couponRuleProduct CouponRuleProduct[]
   
   // CartItems       CartItem[]
 }
@@ -113,7 +113,7 @@ model Category {
   images      String?
 
   products Product[]
-
+  couponRuleCategoryx CouponRuleCategory[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -127,7 +127,8 @@ model Order {
   customer    User          @relation(fields: [customerId], references: [id])
 
   status      PaymentStatus @default(PENDING)
-
+  transactionId String @unique
+   
   totalAmount Float
 
   discountAmount Float @default(0)
@@ -218,16 +219,37 @@ model Coupon {
 model CouponRule {
   id String @id @default(uuid())
   couponId String
+  coupon Coupon @relation(fields: [couponId], references: [id])
 
   minPurchase Float?
   minQuantity Int?
 
-  categoryIds String[]
-  productIds String[]
-  product Product @relation(fields: [productIds],references: [id])
+
+  couponRuleProduct CouponRuleProduct[]
+  couponRuleCategory CouponRuleCategory[]
   newUserOnly Boolean?
 
-  coupon Coupon @relation(fields: [couponId], references: [id])
+}
+
+ model CouponRuleProduct {
+  id String @id @default(uuid())
+   couponRuleId String
+   productId String
+   couponRule CouponRule @relation(fields:[couponRuleId], references:[id])
+    product Product @relation(fields: [productId],references: [id])
+   @@unique([couponRuleId,productId])
+ }
+
+model CouponRuleCategory {
+  id String @id @default(uuid())
+
+  couponRuleId String
+  categoryId String
+
+  couponRule CouponRule @relation(fields:[couponRuleId], references:[id])
+  category Category @relation(fields:[categoryId], references:[id])
+
+  @@unique([couponRuleId, categoryId])
 }
 
 model CouponBenefit {

@@ -1,10 +1,12 @@
 import { User } from "../../../generated/prisma/client";
 import prisma from "../../../utils/prisma";
 import bcrypt from "bcrypt";
+import AppError from "../../error/AppError";
 
 const createUser = async (payload: any) => {
-  console.log(payload,'load');
-  
+   if (!payload.email || !payload.password || !payload.username) {
+  throw new AppError(400, "Required fields are missing");
+}
   const hashedPassword: string = await bcrypt.hash(payload.password, 12);
 
   const result = prisma.user.create({
