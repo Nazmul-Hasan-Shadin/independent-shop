@@ -122,6 +122,7 @@ const getAllProduct = async (filters: any, options: any) => {
       price:true,
       discount:true,
       images:true,
+      salesCount:true,
       category:{
         select:{
           name:true,

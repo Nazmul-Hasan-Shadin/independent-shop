@@ -10,5 +10,5 @@ const router = express_1.default.Router();
 router.post('/init-payment', payment_controller_1.PaymentControllerSSL.initPayment);
 // router.get('/validate-payment',PaymentControllerSSL.validatePayment)
 router.post('/ipn', payment_controller_1.PaymentControllerSSL.handleIPN);
-router.post('/success/', payment_controller_1.PaymentControllerSSL.handleSuccess);
+// router.post('/success/', PaymentControllerSSL.handleSuccess);
 exports.PaymentRoutesSsl = router;

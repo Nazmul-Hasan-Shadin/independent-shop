@@ -36,30 +36,29 @@ const initPayment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
 //     data: result,
 //   });
 // });
+// const handleIPN = catchAsync(async (req, res) => {
+//   const { val_id, tran_id, status } = req.body;
+//   console.log('ipn',req)
+//     console.log('ipn body',req.body)
+//   if (!val_id) {
+//     res.status(400).json({ message: "val_id missing in IPN" });
+//     return;
+//   }
+//   const result = await PaymentServicesSSL.validatePayment2({
+//     val_id,
+//     tran_id,
+//     status,
+//   });
+//   // API response---
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "IPN received & validated",
+//     data: result,
+//   });
+// });
 const handleIPN = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { val_id, tran_id, status } = req.body;
-    console.log('ipn', req);
-    console.log('ipn body', req.body);
-    if (!val_id) {
-        res.status(400).json({ message: "val_id missing in IPN" });
-        return;
-    }
-    const result = yield payment_services_1.PaymentServicesSSL.validatePayment2({
-        val_id,
-        tran_id,
-        status,
-    });
-    // API response---
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: "IPN received & validated",
-        data: result,
-    });
-}));
-const handleSuccess = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const payload = req.body;
-    console.log('suceese url page', payload);
     if (!payload.tran_id) {
         res.status(400).json({ message: "tran_id or val_id missing" });
         return;
@@ -75,11 +74,13 @@ const handleSuccess = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
                 status: 'COMPLETE'
             }
         });
-        res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
+        console.log('iam ahittinnngggkgjkdj');
+        // res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
+        res.status(200).send("IPN received");
     }
 }));
 exports.PaymentControllerSSL = {
     initPayment,
     handleIPN,
-    handleSuccess,
+    // handleSuccess,
 };

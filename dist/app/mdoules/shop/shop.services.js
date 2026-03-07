@@ -40,13 +40,16 @@ const createShop = (req) => __awaiter(void 0, void 0, void 0, function* () {
 const getTopTenShop = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.shop.findMany({
         include: {
-            product: true,
+            _count: {
+                select: {
+                    product: true
+                }
+            }
         },
     });
     return result;
 });
 const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('iam hit');
     const { searchTerm } = filterQuery, othersFilter = __rest(filterQuery, ["searchTerm"]);
     console.log(othersFilter, 'otherFileters');
     console.log(filterQuery, 'filterquery');
@@ -86,6 +89,7 @@ const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, f
     let page = Number(filterQuery.page) || 1;
     let skip = (page - 1) * limit;
     const result = yield prisma_1.default.shop.findMany({
+        where: filteredWhereCondition,
         include: {
             _count: {
                 select: {
@@ -95,7 +99,6 @@ const getAllShop = (filterQuery, options) => __awaiter(void 0, void 0, void 0, f
                 }
             }
         },
-        where: filteredWhereCondition,
         skip: skip,
         take: limit,
         orderBy: filterQuery.sortBy && (filterQuery === null || filterQuery === void 0 ? void 0 : filterQuery.orderBy) ? { [filterQuery.orderBy]: filterQuery.sortBy } : { createdAt: 'asc' }

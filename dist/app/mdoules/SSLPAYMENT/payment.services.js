@@ -17,10 +17,10 @@ const axios_1 = __importDefault(require("axios"));
 const config_1 = __importDefault(require("../../../config"));
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
 const successUrl = process.env.NODE_ENV === "development"
-    ? process.env.SUCCESS_URL_LOCAL
-    : process.env.SUCCESS_URL;
+    ? process.env.REDIRECT_URL_LOCAL
+    : process.env.REDIRECT_URL;
 const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* () {
-    const totalAmount = orderInfo.orderItems.reduce((initial, item) => initial + Number(item.quantity * item.price), 0);
+    const totalAmount = orderInfo === null || orderInfo === void 0 ? void 0 : orderInfo.orderItems.reduce((initial, item) => initial + Number(item.quantity * item.price), 0);
     const createOrderIntoDb = yield prisma_1.default.order.create({
         data: {
             shopId: orderInfo.shopId,
@@ -45,7 +45,7 @@ const initPayment = (orderInfo) => __awaiter(void 0, void 0, void 0, function* (
         currency: "BDT",
         tran_id: orderInfo.transactionId, // use unique tran_id for each api call
         // success_url: `https://independent-shop.vercel.app/api/v1/payment-gate/success/${orderInfo.transactionId}`,
-        success_url: `${successUrl}/api/v1/payment-gate/success`,
+        success_url: `${successUrl}/success-payment`,
         fail_url: "http://localhost:3030/fail",
         cancel_url: "http://localhost:3030/cancel",
         ipn_url: `https://api.rodro.online/api/v1/payment-gate/ipn`,

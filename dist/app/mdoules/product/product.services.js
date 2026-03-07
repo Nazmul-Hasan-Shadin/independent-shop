@@ -42,7 +42,8 @@ const getAllProduct = (filters, options) => __awaiter(void 0, void 0, void 0, fu
             },
         });
     }
-    console.log(searchTerm, "searchterm");
+    console.log(category, "categoryname");
+    console.log(brandFilterByArray, "branfarray");
     const andCondition = [];
     if (searchTerm) {
         andCondition.push({
@@ -104,13 +105,26 @@ const getAllProduct = (filters, options) => __awaiter(void 0, void 0, void 0, fu
     let page = Number(options.page) || 1;
     const result = yield prisma_1.default.product.findMany({
         where: whereCondition,
-        include: {
-            category: true,
-            shop: {
+        // include: {
+        //   category: true,
+        //   shop: {
+        //     select: {
+        //       name: true,
+        //     },
+        //   },
+        // },
+        select: {
+            name: true,
+            id: true,
+            price: true,
+            discount: true,
+            images: true,
+            category: {
                 select: {
                     name: true,
+                    id: true
                 },
-            },
+            }
         },
         skip: (page - 1) * limit,
         orderBy: options.sortBy && options.orderBy
