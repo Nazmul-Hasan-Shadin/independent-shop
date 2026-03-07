@@ -18,11 +18,12 @@ const getAllProduct = async (filters: any, options: any) => {
     filters;
   //categoryName dea dropdown dea direct search kora jai
 
+  
   let brandFilterByArray = [];
   if (brandFilter) {
     brandFilterByArray = brandFilter.split(",");
   }
-
+  
   let category;
   if (categoryName) {
     category = await prisma.category.findUnique({
@@ -31,8 +32,8 @@ const getAllProduct = async (filters: any, options: any) => {
       },
     });
   }
-  console.log(searchTerm, "searchterm");
-
+  console.log(category, "categoryname");
+    console.log(brandFilterByArray, "branfarray");
   const andCondition: Prisma.ProductWhereInput[] = [];
   if (searchTerm) {
     andCondition.push({
@@ -106,13 +107,29 @@ const getAllProduct = async (filters: any, options: any) => {
 
   const result = await prisma.product.findMany({
     where: whereCondition,
-    include: {
-      category: true,
-      shop: {
-        select: {
-          name: true,
+    // include: {
+    //   category: true,
+    //   shop: {
+    //     select: {
+    //       name: true,
+    //     },
+    //   },
+    // },
+    
+    select:{
+      name:true,
+      id:true,
+      price:true,
+      discount:true,
+      images:true,
+      category:{
+        select:{
+          name:true,
+          id:true
         },
-      },
+      
+
+      }
     },
     skip: (page - 1) * limit,
     orderBy:

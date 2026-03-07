@@ -46,6 +46,11 @@ const createOrder = async (payload: any) => {
   });
 };
 
+
+
+
+
+
 const getAllOrdersFromDB = async (user: IAuthUser) => {
   let result;
 
@@ -146,6 +151,8 @@ const getOrderById = async (orderId: string) => {
 
   return order;
 };
+
+
 
 // const updateOrderStatus = async (orderId: string, status: string) => {
 //   const updatedOrder = await prisma.order.update({

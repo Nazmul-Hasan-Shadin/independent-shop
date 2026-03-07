@@ -20,7 +20,11 @@ const createShop = async (req: Request) => {
 const getTopTenShop = async () => {
   const result = await prisma.shop.findMany({
     include: {
-      product: true,
+      _count:{
+        select:{
+          product:true
+        }
+      }
     },
   });
   return result;
@@ -31,8 +35,6 @@ const getAllShop = async (
   options: Record<string, any>
 ) => {
 
-  console.log('iam hit');
-  
   const { searchTerm, ...othersFilter } = filterQuery;
     console.log(othersFilter,'otherFileters');
     console.log(filterQuery,'filterquery');
@@ -84,16 +86,18 @@ const getAllShop = async (
   let skip = (page - 1) * limit;
 
   const result = await prisma.shop.findMany({
-    include: {
-       _count:{
+ 
+    where: filteredWhereCondition,
+    include:{
+              _count:{
         select:{
           product:true,
           Order:true,
+          
           shopFollower:true
         }
        }
     },
-    where: filteredWhereCondition,
     skip:skip,
     take:limit,
     orderBy: filterQuery.sortBy && filterQuery?.orderBy ? {[filterQuery.orderBy]:filterQuery.sortBy}:{createdAt:'asc'}
