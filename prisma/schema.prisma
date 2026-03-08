@@ -1,5 +1,3 @@
-
-
 // datasource db {
 //   provider = "postgresql"
 //   url      = env("DATABASE_URL")
@@ -13,7 +11,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-
 }
 
 model User {
@@ -30,8 +27,8 @@ model User {
   Order       Order[]
   productView ProductView[]
 
-  review Review[]
-usageCoupon CouponUsage[]
+  review       Review[]
+  usageCoupon  CouponUsage[]
   shop         Shop?
   shopFollower ShopFollower[]
   userData     UserData?
@@ -52,14 +49,14 @@ model UserData {
 
 model Shop {
   id           String         @id @default(uuid())
-  vendorId     String         @unique 
+  vendorId     String         @unique
   name         String
   logo         String?
   description  String?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   vendor       User           @relation(fields: [vendorId], references: [id])
-  coupons Coupon[] 
+  coupons      Coupon[]
   product      Product[]
   Order        Order[]
   shopFollower ShopFollower[]
@@ -67,27 +64,27 @@ model Shop {
 }
 
 model Product {
-  id             String        @id @default(uuid())
-  shopId         String
-  name           String
-  description    String?
-  price          Float
-  isFlash        Boolean?      @default(false)
-  salesCount     Int           @default(0)
-  viewCount      Int           @default(0)
-  categoryId     String
-  inventoryCount Int           @default(0)
-  discount       Float         @default(0.0)
-  images         String[]
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  shop           Shop          @relation(fields: [shopId], references: [id])
-  productView    ProductView[]
-  category       Category      @relation(fields: [categoryId], references: [id])
-  review         Review[]
-  OrderItems     OrderItem[]
+  id                String              @id @default(uuid())
+  shopId            String
+  name              String
+  description       String?
+  price             Float
+  isFlash           Boolean?            @default(false)
+  salesCount        Int                 @default(0)
+  viewCount         Int                 @default(0)
+  categoryId        String
+  inventoryCount    Int                 @default(0)
+  discount          Float               @default(0.0)
+  images            String[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  shop              Shop                @relation(fields: [shopId], references: [id])
+  productView       ProductView[]
+  category          Category            @relation(fields: [categoryId], references: [id])
+  review            Review[]
+  OrderItems        OrderItem[]
   couponRuleProduct CouponRuleProduct[]
-  
+
   // CartItems       CartItem[]
 }
 
@@ -112,33 +109,37 @@ model Category {
   description String
   images      String?
 
-  products Product[]
+  products            Product[]
   couponRuleCategoryx CouponRuleCategory[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 model Order {
-  id          String        @id @default(uuid())
-  shopId      String
-  shop        Shop          @relation(fields: [shopId], references: [id])
+  id     String @id @default(uuid())
+  shopId String
+  shop   Shop   @relation(fields: [shopId], references: [id])
 
-  customerId  String
-  customer    User          @relation(fields: [customerId], references: [id])
+  customerId String?
+  customer   User?   @relation(fields: [customerId], references: [id])
+  guestName String ?
+  guestPhone String ?
+  guestAddress String?
+  status        PaymentStatus @default(PENDING)
+  paymentMethod PaymentMethod ?
+  transactionId String        @unique
 
-  status      PaymentStatus @default(PENDING)
-  transactionId String @unique
-   
   totalAmount Float
 
-  discountAmount Float @default(0)
+  discountAmount    Float   @default(0)
   appliedCouponCode String?
 
   couponUsage CouponUsage[]
 
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  orderItems  OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  orderItems OrderItem[]
+
   @@map("orders")
 }
 
@@ -175,26 +176,25 @@ model ShopFollower {
 
   @@unique([userId, shopId])
 }
- 
 
 model Coupon {
   id String @id @default(uuid())
 
-  code String @unique
-  title String
+  code        String  @unique
+  title       String
   description String?
 
-  type CouponType
+  type  CouponType
   scope CouponScope
 
-  vendorId String?   //vendor manea akanea shopId
-  vendor Shop? @relation(fields: [vendorId], references: [id])
+  vendorId String? //vendor manea akanea shopId
+  vendor   Shop?   @relation(fields: [vendorId], references: [id])
 
   startDate DateTime
-  endDate DateTime
-  isActive Boolean @default(true)
+  endDate   DateTime
+  isActive  Boolean  @default(true)
 
-  maxUsage Int?
+  maxUsage        Int?
   maxUsagePerUser Int?
 
   priority Int @default(1)
@@ -202,12 +202,12 @@ model Coupon {
   isStackable Boolean @default(false)
   isExclusive Boolean @default(false)
 
-  totalUsageCount Int @default(0)
+  totalUsageCount    Int   @default(0)
   totalDiscountGiven Float @default(0)
 
-  rules CouponRule[]
+  rules    CouponRule[]
   benefits CouponBenefit[]
-  usages CouponUsage[]
+  usages   CouponUsage[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -217,48 +217,47 @@ model Coupon {
 }
 
 model CouponRule {
-  id String @id @default(uuid())
+  id       String @id @default(uuid())
   couponId String
-  coupon Coupon @relation(fields: [couponId], references: [id])
+  coupon   Coupon @relation(fields: [couponId], references: [id])
 
   minPurchase Float?
   minQuantity Int?
 
-
-  couponRuleProduct CouponRuleProduct[]
+  couponRuleProduct  CouponRuleProduct[]
   couponRuleCategory CouponRuleCategory[]
-  newUserOnly Boolean?
-
+  newUserOnly        Boolean?
 }
 
- model CouponRuleProduct {
-  id String @id @default(uuid())
-   couponRuleId String
-   productId String
-   couponRule CouponRule @relation(fields:[couponRuleId], references:[id])
-    product Product @relation(fields: [productId],references: [id])
-   @@unique([couponRuleId,productId])
- }
+model CouponRuleProduct {
+  id           String     @id @default(uuid())
+  couponRuleId String
+  productId    String
+  couponRule   CouponRule @relation(fields: [couponRuleId], references: [id])
+  product      Product    @relation(fields: [productId], references: [id])
+
+  @@unique([couponRuleId, productId])
+}
 
 model CouponRuleCategory {
   id String @id @default(uuid())
 
   couponRuleId String
-  categoryId String
+  categoryId   String
 
-  couponRule CouponRule @relation(fields:[couponRuleId], references:[id])
-  category Category @relation(fields:[categoryId], references:[id])
+  couponRule CouponRule @relation(fields: [couponRuleId], references: [id])
+  category   Category   @relation(fields: [categoryId], references: [id])
 
   @@unique([couponRuleId, categoryId])
 }
 
 model CouponBenefit {
-  id String @id @default(uuid())
+  id       String @id @default(uuid())
   couponId String
 
   discountType DiscountType
-  value Float
-  maxDiscount Float?
+  value        Float
+  maxDiscount  Float?
 
   coupon Coupon @relation(fields: [couponId], references: [id])
 }
@@ -267,18 +266,18 @@ model CouponUsage {
   id String @id @default(uuid())
 
   couponId String
-  userId String
-  orderId String?
+  userId   String
+  orderId  String?
 
-  order Order? @relation(fields: [orderId], references: [id])
-  user User @relation(fields: [userId], references: [id])
+  order  Order? @relation(fields: [orderId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
   coupon Coupon @relation(fields: [couponId], references: [id])
 
   usedAt DateTime @default(now())
 
+  @@unique([couponId, userId])
   @@index([couponId])
   @@index([userId])
-  @@unique([couponId, userId])
 }
 
 model Banner {
@@ -316,6 +315,7 @@ enum DiscountType {
   FIXED
   FREE_SHIPPING
 }
+
 enum CouponType {
   PLATFORM
   VENDOR
@@ -327,10 +327,21 @@ enum CouponScope {
   SHIPPING
 }
 
-
-
 enum PaymentStatus {
   PENDING
   COMPLETE
   FAILED
+}
+enum PaymentMethod {
+  COD
+  SSL
+  STRIPE
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }

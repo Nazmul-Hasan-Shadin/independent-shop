@@ -2,7 +2,7 @@ import { IAuthUser } from "../../../interface/common";
 import prisma from "../../../utils/prisma";
 
 const createOrder = async (payload: any) => {
-  const { shopId, customerId, totalAmount, orderItems, status,transactionId } = payload;
+  const { shopId, customerId, guestName,guestPhone,guestAddress,paymentMethod,totalAmount, orderItems, status,transactionId } = payload;
   console.log(shopId, customerId, totalAmount, orderItems,';bola');
 
   // Create the order and associated order items
@@ -18,6 +18,10 @@ const createOrder = async (payload: any) => {
         },
         totalAmount,
         status: status,
+        paymentMethod,
+        guestName:guestName,
+        guestPhone,
+        guestAddress,
         orderItems: {
           create: orderItems.map((item: any) => ({
             productId: item.productId,
