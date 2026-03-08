@@ -6,6 +6,9 @@ const createOrder = async (payload: any) => {
   console.log(shopId, customerId, totalAmount, orderItems,';bola');
 
   // Create the order and associated order items
+
+  console.log(orderItems);
+  
   return prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
       data: {
@@ -24,7 +27,7 @@ const createOrder = async (payload: any) => {
         guestAddress,
         orderItems: {
           create: orderItems.map((item: any) => ({
-            productId: item.productId,
+            productId: item.id,
             quantity: item.quantity,
             price: item.price,
           })),
@@ -39,7 +42,7 @@ const createOrder = async (payload: any) => {
       orderItems.map((order: any) =>
         tx.product.update({
           where: {
-            id: order.productId,
+            id: order.id,
           },
           data: {
             salesCount: { increment: 1 },

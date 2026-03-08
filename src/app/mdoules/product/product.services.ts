@@ -120,6 +120,7 @@ const getAllProduct = async (filters: any, options: any) => {
       id: true,
       price: true,
       shopId: true,
+  
       discount: true,
       images: true,
       salesCount: true,

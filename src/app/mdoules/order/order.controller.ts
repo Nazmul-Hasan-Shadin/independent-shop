@@ -10,7 +10,7 @@ const createOrder = catchAsync(async (req, res, next) => {
   const result = await OrderServices.createOrder(req.body);
 
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Order created successfully",
     data: result,
