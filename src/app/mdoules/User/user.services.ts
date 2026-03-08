@@ -30,6 +30,8 @@ const getUserByEmail = async (userInfo: any): Promise<User | null> => {
       shopFollower: true,
     },
   });
+  console.log(user,'iamu suer');
+  
 
   return user;
 };

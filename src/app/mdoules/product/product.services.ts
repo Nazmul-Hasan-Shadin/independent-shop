@@ -18,12 +18,11 @@ const getAllProduct = async (filters: any, options: any) => {
     filters;
   //categoryName dea dropdown dea direct search kora jai
 
-  
   let brandFilterByArray = [];
   if (brandFilter) {
     brandFilterByArray = brandFilter.split(",");
   }
-  
+
   let category;
   if (categoryName) {
     category = await prisma.category.findUnique({
@@ -33,7 +32,7 @@ const getAllProduct = async (filters: any, options: any) => {
     });
   }
   console.log(category, "categoryname");
-    console.log(brandFilterByArray, "branfarray");
+  console.log(brandFilterByArray, "branfarray");
   const andCondition: Prisma.ProductWhereInput[] = [];
   if (searchTerm) {
     andCondition.push({
@@ -115,22 +114,21 @@ const getAllProduct = async (filters: any, options: any) => {
     //     },
     //   },
     // },
-    
-    select:{
-      name:true,
-      id:true,
-      price:true,
-      discount:true,
-      images:true,
-      salesCount:true,
-      category:{
-        select:{
-          name:true,
-          id:true
-        },
-      
 
-      }
+    select: {
+      name: true,
+      id: true,
+      price: true,
+      shopId: true,
+      discount: true,
+      images: true,
+      salesCount: true,
+      category: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
     },
     skip: (page - 1) * limit,
     orderBy:
@@ -171,12 +169,10 @@ const getSingleProduct = async (productId: string) => {
 
 const getProductByShopId = async (
   shopId: string,
-  filterQuery: Record<string, unknown>
+  filterQuery: Record<string, unknown>,
 ) => {
   const { searchTerm } = filterQuery;
   const andCondition = [];
- 
-  
 
   if (searchTerm) {
     andCondition.push({
@@ -184,7 +180,7 @@ const getProductByShopId = async (
         return {
           [field]: {
             contains: searchTerm,
-            mode: "insensitive"
+            mode: "insensitive",
           },
         };
       }),
@@ -226,8 +222,8 @@ const createProduct = async (req: Request) => {
     const imagePaths = Array.isArray(req.files)
       ? req.files.map((file: any) => file.path)
       : req.files
-      ? [req.files.path]
-      : [];
+        ? [req.files.path]
+        : [];
     req.body.images = imagePaths;
   }
 
@@ -242,7 +238,7 @@ const increaseViewCount = async (
   productId: string,
   userInfo: any,
   ip: string,
-  userAgent: string
+  userAgent: string,
 ) => {
   const productExists = await prisma.product.findUnique({
     where: { id: productId },
@@ -254,7 +250,7 @@ const increaseViewCount = async (
   if (Object.keys(userInfo).length >= 0) {
     const decodedUserInfo = jwtHelpers.verifyToken(
       userInfo.userInfo,
-      config.jwt.jwt_secret as string
+      config.jwt.jwt_secret as string,
     );
     const user = await prisma.user.findUniqueOrThrow({
       where: {
@@ -360,7 +356,7 @@ const deleteProduct = async (productId: string) => {
 
 const getFollowedShopProduct = async (
   userData: IAuthUser,
-  filterQuery: Record<string, unknown>
+  filterQuery: Record<string, unknown>,
 ) => {
   const { searchTerm, ...filtersData } = filterQuery;
   const userFollowedShop = await prisma.user.findFirstOrThrow({
