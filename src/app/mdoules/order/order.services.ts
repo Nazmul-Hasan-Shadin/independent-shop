@@ -1,5 +1,6 @@
 import { IAuthUser } from "../../../interface/common";
 import prisma from "../../../utils/prisma";
+import AppError from "../../error/AppError";
 
 const createOrder = async (payload: any) => {
   const { shopId, customerId, guestName,guestPhone,guestAddress,paymentMethod,totalAmount, orderItems, status,transactionId } = payload;
@@ -8,7 +9,12 @@ const createOrder = async (payload: any) => {
   // Create the order and associated order items
 
   console.log(orderItems);
-  
+// if (!customerId) {
+
+// }
+  if (!guestPhone || !guestName || !guestAddress) {
+    throw new AppError(400, "Guest details are required for guest checkout");
+  }
   return prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
       data: {
@@ -16,9 +22,11 @@ const createOrder = async (payload: any) => {
           connect: { id: shopId }, 
         },
         transactionId,
-         customer: {
-          connect: { id: customerId },
-        },
+...(customerId && {
+  customer: {
+    connect: { id: customerId },
+  },
+}),
         totalAmount,
         status: status,
         paymentMethod,
@@ -159,7 +167,22 @@ const getOrderById = async (orderId: string) => {
   return order;
 };
 
+  const getOrderItemsById=async (orderId:string)=>{
+     const orderItems= await prisma.orderItem.findMany({
+      where:{
+        orderId:orderId
+      },
+      include:{
+        product:{
+          select:{
+            name:true
+          }
+        }
+      }
+     })
 
+     return orderItems
+  }
 
 // const updateOrderStatus = async (orderId: string, status: string) => {
 //   const updatedOrder = await prisma.order.update({
@@ -184,4 +207,5 @@ export const OrderServices = {
   getAllOrdersFromDB,
   //   updateOrderStatus,
   //   deleteOrder,
+  getOrderItemsById
 };

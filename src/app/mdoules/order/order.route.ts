@@ -12,7 +12,7 @@ router.get(
   OrderController.getAllOrders
 );
 router.get("/:id", OrderController.getOrderById);
-
+router.get("/item/:orderId", OrderController.getOrderItems);
 router.post("/", OrderController.createOrder);
 
 export const OrderRoutes = router;

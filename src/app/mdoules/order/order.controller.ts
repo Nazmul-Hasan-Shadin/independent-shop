@@ -5,7 +5,6 @@ import { OrderServices } from "./order.services";
 import { IAuthUser } from "../../../interface/common";
 
 const createOrder = catchAsync(async (req, res, next) => {
-  console.log('hiç');
   
   const result = await OrderServices.createOrder(req.body);
 
@@ -46,6 +45,19 @@ const getOrderById = catchAsync(async (req, res, next) => {
   });
 });
 
+const getOrderItems = catchAsync(async (req, res, next) => {
+  const { orderId } = req.params ;
+
+  const result = await OrderServices.getOrderItemsById(orderId as string);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Order items fetched successfully",
+    data: result,
+  });
+});
+
 //   const updateOrderStatus = catchAsync(async (req, res, next) => {
 //     const { id } = req.params;
 //     const { status } = req.body;
@@ -79,4 +91,5 @@ export const OrderController = {
   getAllOrders,
   // updateOrderStatus,
   // deleteOrder
+  getOrderItems
 };
