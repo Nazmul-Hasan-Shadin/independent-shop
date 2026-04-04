@@ -14,37 +14,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderServices = void 0;
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
+const AppError_1 = __importDefault(require("../../error/AppError"));
 const createOrder = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const { shopId, customerId, totalAmount, orderItems, status, transactionId } = payload;
+    const { shopId, customerId, guestName, guestPhone, guestAddress, paymentMethod, totalAmount, orderItems, status, transactionId } = payload;
     console.log(shopId, customerId, totalAmount, orderItems, ';bola');
     // Create the order and associated order items
+    console.log(orderItems);
+    // if (!customerId) {
+    // }
+    if (!guestPhone || !guestName || !guestAddress) {
+        throw new AppError_1.default(400, "Guest details are required for guest checkout");
+    }
     return prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const order = yield tx.order.create({
-            data: {
-                shop: {
+            data: Object.assign(Object.assign({ shop: {
                     connect: { id: shopId },
-                },
-                transactionId,
+                }, transactionId }, (customerId && {
                 customer: {
                     connect: { id: customerId },
                 },
-                totalAmount,
-                status: status,
-                orderItems: {
+            })), { totalAmount, status: status, paymentMethod, guestName: guestName, guestPhone,
+                guestAddress, orderItems: {
                     create: orderItems.map((item) => ({
-                        productId: item.productId,
+                        productId: item.id,
                         quantity: item.quantity,
                         price: item.price,
                     })),
-                },
-            },
+                } }),
             include: {
                 orderItems: true,
             },
         });
         yield Promise.all(orderItems.map((order) => tx.product.update({
             where: {
-                id: order.productId,
+                id: order.id,
             },
             data: {
                 salesCount: { increment: 1 },
@@ -148,6 +151,21 @@ const getOrderById = (orderId) => __awaiter(void 0, void 0, void 0, function* ()
     });
     return order;
 });
+const getOrderItemsById = (orderId) => __awaiter(void 0, void 0, void 0, function* () {
+    const orderItems = yield prisma_1.default.orderItem.findMany({
+        where: {
+            orderId: orderId
+        },
+        include: {
+            product: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    });
+    return orderItems;
+});
 // const updateOrderStatus = async (orderId: string, status: string) => {
 //   const updatedOrder = await prisma.order.update({
 //     where: { id: orderId },
@@ -167,4 +185,5 @@ exports.OrderServices = {
     getAllOrdersFromDB,
     //   updateOrderStatus,
     //   deleteOrder,
+    getOrderItemsById
 };

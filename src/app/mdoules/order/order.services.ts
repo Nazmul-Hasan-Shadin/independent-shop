@@ -13,7 +13,7 @@ const createOrder = async (payload: any) => {
 
 // }
   if (!guestPhone || !guestName || !guestAddress) {
-    throw new AppError(400, "Guest details are required for guest checkout");
+    throw new AppError(400, "Delivery address required");
   }
   return prisma.$transaction(async (tx) => {
     const order = await tx.order.create({

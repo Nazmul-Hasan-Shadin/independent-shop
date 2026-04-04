@@ -17,10 +17,9 @@ const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const order_services_1 = require("./order.services");
 const createOrder = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('hiç');
     const result = yield order_services_1.OrderServices.createOrder(req.body);
     (0, sendResponse_1.default)(res, {
-        statusCode: 201,
+        statusCode: 200,
         success: true,
         message: "Order created successfully",
         data: result,
@@ -43,6 +42,16 @@ const getOrderById = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         statusCode: 200,
         success: true,
         message: "Order fetched successfully",
+        data: result,
+    });
+}));
+const getOrderItems = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { orderId } = req.params;
+    const result = yield order_services_1.OrderServices.getOrderItemsById(orderId);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Order items fetched successfully",
         data: result,
     });
 }));
@@ -73,4 +82,5 @@ exports.OrderController = {
     getAllOrders,
     // updateOrderStatus,
     // deleteOrder
+    getOrderItems
 };

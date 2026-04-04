@@ -17,7 +17,9 @@ const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const payment_services_1 = require("./payment.services");
 const prisma_1 = __importDefault(require("../../../utils/prisma"));
-const productionRedirectUrl = process.env.NODE_ENV === 'development' ? process.env.REDIRECT_URL_LOCAL : process.env.REDIRECT_URL;
+const productionRedirectUrl = process.env.NODE_ENV === "development"
+    ? process.env.REDIRECT_URL_LOCAL
+    : process.env.REDIRECT_URL;
 const initPayment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield payment_services_1.PaymentServicesSSL.initPayment(req.body);
     (0, sendResponse_1.default)(res, {
@@ -64,20 +66,51 @@ const handleIPN = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         return;
     }
     const result = yield payment_services_1.PaymentServicesSSL.validatePayment2(payload);
-    console.log(result, 'inside succesurl');
-    if (result.status === 'VALID') {
-        yield prisma_1.default.order.update({
-            where: {
-                transactionId: payload.tran_id
-            },
-            data: {
-                status: 'COMPLETE'
+    console.log(result, "inside succesurl");
+    if (result.status === "VALID") {
+        const orderResult = yield prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
+            const order = yield tx.order.findUnique({
+                where: { transactionId: payload.tran_id },
+                include: { orderItems: true },
+            });
+            if (!order) {
+                throw new Error("Order not found");
             }
-        });
-        console.log('iam ahittinnngggkgjkdj');
+            // Prevent duplicate update
+            if ((order === null || order === void 0 ? void 0 : order.status) === "COMPLETE") {
+                return;
+            }
+            const updateOrder = yield tx.order.update({
+                where: {
+                    transactionId: payload.tran_id,
+                },
+                data: {
+                    status: "COMPLETE",
+                },
+                include: {
+                    orderItems: true,
+                },
+            });
+            for (let item of updateOrder.orderItems) {
+                let updateSalesCount = yield tx.product.update({
+                    where: {
+                        id: item.productId,
+                    },
+                    data: {
+                        salesCount: {
+                            increment: item.quantity,
+                        },
+                        inventoryCount: {
+                            decrement: item.quantity,
+                        },
+                    },
+                });
+            }
+            return updateOrder;
+        }));
         // res.redirect(`${productionRedirectUrl}/success-payment/79guhh`);
-        res.status(200).send("IPN received");
     }
+    res.status(200).send("IPN processed");
 }));
 exports.PaymentControllerSSL = {
     initPayment,

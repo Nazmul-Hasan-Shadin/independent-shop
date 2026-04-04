@@ -117,14 +117,16 @@ const getAllProduct = (filters, options) => __awaiter(void 0, void 0, void 0, fu
             name: true,
             id: true,
             price: true,
+            shopId: true,
             discount: true,
             images: true,
+            salesCount: true,
             category: {
                 select: {
                     name: true,
-                    id: true
+                    id: true,
                 },
-            }
+            },
         },
         skip: (page - 1) * limit,
         orderBy: options.sortBy && options.orderBy
@@ -168,7 +170,7 @@ const getProductByShopId = (shopId, filterQuery) => __awaiter(void 0, void 0, vo
                 return {
                     [field]: {
                         contains: searchTerm,
-                        mode: "insensitive"
+                        mode: "insensitive",
                     },
                 };
             }),

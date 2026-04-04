@@ -37,6 +37,7 @@ const getUserByEmail = (userInfo) => __awaiter(void 0, void 0, void 0, function*
             shopFollower: true,
         },
     });
+    console.log(user, 'iamu suer');
     return user;
 });
 const getAllUser = () => __awaiter(void 0, void 0, void 0, function* () {
