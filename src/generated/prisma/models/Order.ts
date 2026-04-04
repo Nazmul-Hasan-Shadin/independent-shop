@@ -46,6 +46,7 @@ export type OrderMinAggregateOutputType = {
   status: $Enums.PaymentStatus | null
   paymentMethod: $Enums.PaymentMethod | null
   transactionId: string | null
+  orderStatus: $Enums.OrderStatus | null
   totalAmount: number | null
   discountAmount: number | null
   appliedCouponCode: string | null
@@ -63,6 +64,7 @@ export type OrderMaxAggregateOutputType = {
   status: $Enums.PaymentStatus | null
   paymentMethod: $Enums.PaymentMethod | null
   transactionId: string | null
+  orderStatus: $Enums.OrderStatus | null
   totalAmount: number | null
   discountAmount: number | null
   appliedCouponCode: string | null
@@ -80,6 +82,7 @@ export type OrderCountAggregateOutputType = {
   status: number
   paymentMethod: number
   transactionId: number
+  orderStatus: number
   totalAmount: number
   discountAmount: number
   appliedCouponCode: number
@@ -109,6 +112,7 @@ export type OrderMinAggregateInputType = {
   status?: true
   paymentMethod?: true
   transactionId?: true
+  orderStatus?: true
   totalAmount?: true
   discountAmount?: true
   appliedCouponCode?: true
@@ -126,6 +130,7 @@ export type OrderMaxAggregateInputType = {
   status?: true
   paymentMethod?: true
   transactionId?: true
+  orderStatus?: true
   totalAmount?: true
   discountAmount?: true
   appliedCouponCode?: true
@@ -143,6 +148,7 @@ export type OrderCountAggregateInputType = {
   status?: true
   paymentMethod?: true
   transactionId?: true
+  orderStatus?: true
   totalAmount?: true
   discountAmount?: true
   appliedCouponCode?: true
@@ -247,6 +253,7 @@ export type OrderGroupByOutputType = {
   status: $Enums.PaymentStatus
   paymentMethod: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus: $Enums.OrderStatus
   totalAmount: number
   discountAmount: number
   appliedCouponCode: string | null
@@ -287,6 +294,7 @@ export type OrderWhereInput = {
   status?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
   paymentMethod?: Prisma.EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFilter<"Order"> | string
+  orderStatus?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFilter<"Order"> | number
   discountAmount?: Prisma.FloatFilter<"Order"> | number
   appliedCouponCode?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -308,6 +316,7 @@ export type OrderOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  orderStatus?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
   appliedCouponCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -332,6 +341,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   guestAddress?: Prisma.StringNullableFilter<"Order"> | string | null
   status?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
   paymentMethod?: Prisma.EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
+  orderStatus?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFilter<"Order"> | number
   discountAmount?: Prisma.FloatFilter<"Order"> | number
   appliedCouponCode?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -353,6 +363,7 @@ export type OrderOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  orderStatus?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
   appliedCouponCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -378,6 +389,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Order"> | $Enums.PaymentStatus
   paymentMethod?: Prisma.EnumPaymentMethodNullableWithAggregatesFilter<"Order"> | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringWithAggregatesFilter<"Order"> | string
+  orderStatus?: Prisma.EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
   totalAmount?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   discountAmount?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   appliedCouponCode?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -393,6 +405,7 @@ export type OrderCreateInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -414,6 +427,7 @@ export type OrderUncheckedCreateInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -431,6 +445,7 @@ export type OrderUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -452,6 +467,7 @@ export type OrderUncheckedUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -471,6 +487,7 @@ export type OrderCreateManyInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -486,6 +503,7 @@ export type OrderUpdateManyMutationInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -503,6 +521,7 @@ export type OrderUncheckedUpdateManyInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -530,6 +549,7 @@ export type OrderCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  orderStatus?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
   appliedCouponCode?: Prisma.SortOrder
@@ -552,6 +572,7 @@ export type OrderMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  orderStatus?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
   appliedCouponCode?: Prisma.SortOrder
@@ -569,6 +590,7 @@ export type OrderMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  orderStatus?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discountAmount?: Prisma.SortOrder
   appliedCouponCode?: Prisma.SortOrder
@@ -683,6 +705,10 @@ export type NullableEnumPaymentMethodFieldUpdateOperationsInput = {
   set?: $Enums.PaymentMethod | null
 }
 
+export type EnumOrderStatusFieldUpdateOperationsInput = {
+  set?: $Enums.OrderStatus
+}
+
 export type OrderCreateNestedOneWithoutOrderItemsInput = {
   create?: Prisma.XOR<Prisma.OrderCreateWithoutOrderItemsInput, Prisma.OrderUncheckedCreateWithoutOrderItemsInput>
   connectOrCreate?: Prisma.OrderCreateOrConnectWithoutOrderItemsInput
@@ -721,6 +747,7 @@ export type OrderCreateWithoutCustomerInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -740,6 +767,7 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -788,6 +816,7 @@ export type OrderScalarWhereInput = {
   status?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
   paymentMethod?: Prisma.EnumPaymentMethodNullableFilter<"Order"> | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFilter<"Order"> | string
+  orderStatus?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFilter<"Order"> | number
   discountAmount?: Prisma.FloatFilter<"Order"> | number
   appliedCouponCode?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -803,6 +832,7 @@ export type OrderCreateWithoutShopInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -822,6 +852,7 @@ export type OrderUncheckedCreateWithoutShopInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -865,6 +896,7 @@ export type OrderCreateWithoutOrderItemsInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -885,6 +917,7 @@ export type OrderUncheckedCreateWithoutOrderItemsInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -917,6 +950,7 @@ export type OrderUpdateWithoutOrderItemsInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -937,6 +971,7 @@ export type OrderUncheckedUpdateWithoutOrderItemsInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -953,6 +988,7 @@ export type OrderCreateWithoutCouponUsageInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -973,6 +1009,7 @@ export type OrderUncheckedCreateWithoutCouponUsageInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -1005,6 +1042,7 @@ export type OrderUpdateWithoutCouponUsageInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1025,6 +1063,7 @@ export type OrderUncheckedUpdateWithoutCouponUsageInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1042,6 +1081,7 @@ export type OrderCreateManyCustomerInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -1057,6 +1097,7 @@ export type OrderUpdateWithoutCustomerInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1076,6 +1117,7 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1094,6 +1136,7 @@ export type OrderUncheckedUpdateManyWithoutCustomerInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1110,6 +1153,7 @@ export type OrderCreateManyShopInput = {
   status?: $Enums.PaymentStatus
   paymentMethod?: $Enums.PaymentMethod | null
   transactionId: string
+  orderStatus?: $Enums.OrderStatus
   totalAmount: number
   discountAmount?: number
   appliedCouponCode?: string | null
@@ -1125,6 +1169,7 @@ export type OrderUpdateWithoutShopInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1144,6 +1189,7 @@ export type OrderUncheckedUpdateWithoutShopInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1162,6 +1208,7 @@ export type OrderUncheckedUpdateManyWithoutShopInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paymentMethod?: Prisma.NullableEnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod | null
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderStatus?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   totalAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   appliedCouponCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1219,6 +1266,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   status?: boolean
   paymentMethod?: boolean
   transactionId?: boolean
+  orderStatus?: boolean
   totalAmount?: boolean
   discountAmount?: boolean
   appliedCouponCode?: boolean
@@ -1241,6 +1289,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   status?: boolean
   paymentMethod?: boolean
   transactionId?: boolean
+  orderStatus?: boolean
   totalAmount?: boolean
   discountAmount?: boolean
   appliedCouponCode?: boolean
@@ -1260,6 +1309,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   status?: boolean
   paymentMethod?: boolean
   transactionId?: boolean
+  orderStatus?: boolean
   totalAmount?: boolean
   discountAmount?: boolean
   appliedCouponCode?: boolean
@@ -1279,6 +1329,7 @@ export type OrderSelectScalar = {
   status?: boolean
   paymentMethod?: boolean
   transactionId?: boolean
+  orderStatus?: boolean
   totalAmount?: boolean
   discountAmount?: boolean
   appliedCouponCode?: boolean
@@ -1286,7 +1337,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shopId" | "customerId" | "guestName" | "guestPhone" | "guestAddress" | "status" | "paymentMethod" | "transactionId" | "totalAmount" | "discountAmount" | "appliedCouponCode" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shopId" | "customerId" | "guestName" | "guestPhone" | "guestAddress" | "status" | "paymentMethod" | "transactionId" | "orderStatus" | "totalAmount" | "discountAmount" | "appliedCouponCode" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   shop?: boolean | Prisma.ShopDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Order$customerArgs<ExtArgs>
@@ -1321,6 +1372,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     status: $Enums.PaymentStatus
     paymentMethod: $Enums.PaymentMethod | null
     transactionId: string
+    orderStatus: $Enums.OrderStatus
     totalAmount: number
     discountAmount: number
     appliedCouponCode: string | null
@@ -1762,6 +1814,7 @@ export interface OrderFieldRefs {
   readonly status: Prisma.FieldRef<"Order", 'PaymentStatus'>
   readonly paymentMethod: Prisma.FieldRef<"Order", 'PaymentMethod'>
   readonly transactionId: Prisma.FieldRef<"Order", 'String'>
+  readonly orderStatus: Prisma.FieldRef<"Order", 'OrderStatus'>
   readonly totalAmount: Prisma.FieldRef<"Order", 'Float'>
   readonly discountAmount: Prisma.FieldRef<"Order", 'Float'>
   readonly appliedCouponCode: Prisma.FieldRef<"Order", 'String'>

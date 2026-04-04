@@ -12,7 +12,7 @@ const createUser = async (payload: any) => {
       email:payload.email
     }
   })
-   const existUserName= await prisma.user.findUnique({
+   const existUserName= await prisma.user.findFirst({
     where:{
       email:payload.username
     }

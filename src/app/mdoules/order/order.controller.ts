@@ -47,30 +47,48 @@ const getOrderById = catchAsync(async (req, res, next) => {
 
 const getOrderItems = catchAsync(async (req, res, next) => {
   const { orderId } = req.params ;
-
+  console.log(orderId);
+  
   const result = await OrderServices.getOrderItemsById(orderId as string);
-
+   console.log(result,'bara');
+   
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Order items fetched successfully",
+    message: "Order items fetched dsuccessfully",
     data: result,
   });
 });
 
-//   const updateOrderStatus = catchAsync(async (req, res, next) => {
-//     const { id } = req.params;
-//     const { status } = req.body;
+const getOrderItemsFORVendor = catchAsync(async (req, res, next) => {
+  const { orderId } = req.params ;
+  console.log(orderId);
+  
+  const result = await OrderServices.getOrderItemsByIdForVendorPageDashboard(orderId as string);
+   console.log(result,'bara');
+   
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Order items fetched dsuccessfully",
+    data: result,
+  });
+});
 
-//     const result = await OrderServices.updateOrderStatus(id, status);
+  const updateOrderStatus = catchAsync(async (req, res, next) => {
+   
+    const { id,status } = req.body;
+  console.log(req.body,'body');
+  
+    const result = await OrderServices.updateOrderStatus(req.params.id as string, status);
 
-//     sendResponse(res, {
-//       statusCode: 200,
-//       success: true,
-//       message: "Order status updated successfully",
-//       data: result,
-//     });
-//   });
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Order status updated successfully",
+      data: result,
+    });
+  });
 
 //   const deleteOrder = catchAsync(async (req, res, next) => {
 //     const { id } = req.params;
@@ -89,7 +107,7 @@ export const OrderController = {
   createOrder,
   getOrderById,
   getAllOrders,
-  // updateOrderStatus,
-  // deleteOrder
+  updateOrderStatus,
+   getOrderItemsFORVendor,
   getOrderItems
 };

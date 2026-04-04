@@ -1,3 +1,4 @@
+import { OrderStatus } from "../../../generated/prisma/enums";
 import { IAuthUser } from "../../../interface/common";
 import prisma from "../../../utils/prisma";
 import AppError from "../../error/AppError";
@@ -138,6 +139,7 @@ const getAllOrdersFromDB = async (user: IAuthUser) => {
         orderItems: {
           include: {
             product: true,
+            order:true
           },
         },
       },
@@ -168,14 +170,35 @@ const getOrderById = async (orderId: string) => {
 };
 
   const getOrderItemsById=async (orderId:string)=>{
-     const orderItems= await prisma.orderItem.findMany({
+     const orderItems= await prisma.orderItem.findFirst({
       where:{
-        orderId:orderId
+        id:orderId
       },
       include:{
         product:{
           select:{
-            name:true
+            name:true,
+            images:true
+            ,
+            shop:{
+              select:{
+                vendor:{
+                  select:{
+                    username:true
+                  }
+                }
+              }
+            }
+            
+          },
+          
+        },
+        order:{
+          select:{
+            paymentMethod:true,
+             status:true,
+             orderStatus:true
+            
           }
         }
       }
@@ -184,28 +207,69 @@ const getOrderById = async (orderId: string) => {
      return orderItems
   }
 
-// const updateOrderStatus = async (orderId: string, status: string) => {
-//   const updatedOrder = await prisma.order.update({
-//     where: { id: orderId },
-//     data: { status },
-//   });
+    const getOrderItemsByIdForVendorPageDashboard=async (orderId:string)=>{
+     const orderItems= await prisma.orderItem.findMany({
+      where:{
+        orderId:orderId
+      },
+      include:{
+        product:{
+          select:{
+            name:true,
+            images:true
+            ,
+            shop:{
+              select:{
+                vendor:{
+                  select:{
+                    username:true
+                  }
+                }
+              }
+            }
+            
+          },
+          
+        },
+        order:{
+          select:{
+            paymentMethod:true,
+             status:true,
+             orderStatus:true
+            
+          }
+        }
+      }
+     })
 
-//   return updatedOrder;
-// };
+     return orderItems
+  }
 
-// const deleteOrder = async (orderId: string) => {
-//   await prisma.order.delete({
-//     where: { id: orderId },
-//   });
 
-//   return { message: "Order deleted successfully" };
-// };
+
+const updateOrderStatus = async (orderId: string, status:OrderStatus) => {
+  const updatedOrder = await prisma.order.update({
+    where: { id: orderId },
+    data: { orderStatus:status },
+  });
+
+  return updatedOrder;
+};
+
+const deleteOrder = async (orderId: string) => {
+  await prisma.order.delete({
+    where: { id: orderId },
+  });
+
+  return { message: "Order deleted successfully" };
+};
 
 export const OrderServices = {
   createOrder,
   getOrderById,
   getAllOrdersFromDB,
-  //   updateOrderStatus,
+    updateOrderStatus,
   //   deleteOrder,
+  getOrderItemsByIdForVendorPageDashboard,
   getOrderItemsById
 };

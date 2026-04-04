@@ -128,7 +128,7 @@ model Order {
   status        PaymentStatus @default(PENDING)
   paymentMethod PaymentMethod ?
   transactionId String        @unique
-
+  orderStatus OrderStatus @default(PENDING)
   totalAmount Float
 
   discountAmount    Float   @default(0)

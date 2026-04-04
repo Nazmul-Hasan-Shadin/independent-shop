@@ -12,7 +12,10 @@ router.get(
   OrderController.getAllOrders
 );
 router.get("/:id", OrderController.getOrderById);
-router.get("/item/:orderId", OrderController.getOrderItems);
+router.get("/item/:orderId",OrderController.getOrderItems);
+router.get("/orders/items/:orderId",OrderController.getOrderItemsFORVendor);
 router.post("/", OrderController.createOrder);
+router.patch("/:id/status", OrderController.updateOrderStatus);
+
 
 export const OrderRoutes = router;

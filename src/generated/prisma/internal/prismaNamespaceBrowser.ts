@@ -185,6 +185,7 @@ export const OrderScalarFieldEnum = {
   status: 'status',
   paymentMethod: 'paymentMethod',
   transactionId: 'transactionId',
+  orderStatus: 'orderStatus',
   totalAmount: 'totalAmount',
   discountAmount: 'discountAmount',
   appliedCouponCode: 'appliedCouponCode',
